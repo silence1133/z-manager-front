@@ -16,3 +16,7 @@ export const getHouseListPage = params => { return axios.get(`${base}/houseList.
 
 export const removeHouse = params => { return axios.post(`${base}/house/delete/`+params).then(res => res.data); };
 
+export const addHouse = params => { return axios.post(`${base}/house/add`,params).then(res => res.data); };
+
+
+export const getMerchantListPage = params => { return axios.get(`${base}/merchantList.json`, params); };

@@ -1,21 +1,21 @@
 <template>
     <div>
         <!--列表-->
-        <el-table :data="houseList" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
+        <el-table :data="merchantList" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
                   style="width: 100%;">
             <el-table-column type="selection" width="40">
             </el-table-column>
             <el-table-column type="index">
             </el-table-column>
-            <el-table-column prop="houseCode" label="商铺编号" width="100">
+            <el-table-column prop="merchantCode" label="商户编号" width="100">
             </el-table-column>
-            <el-table-column prop="address" label="地址" width="120">
+            <el-table-column prop="company" label="公司" width="120">
             </el-table-column>
-            <el-table-column prop="area" label="面积（㎡）">
+            <el-table-column prop="corporateBody" label="法人">
             </el-table-column>
-            <el-table-column prop="rentFee" label="参考出租单价（元/㎡）" :formatter="formatRentFee" width="100">
+            <el-table-column prop="idCard" label="身份证（营业执照）"  width="100">
             </el-table-column>
-            <el-table-column prop="propertyFee" label="参考物业费（元/㎡）" :formatter="formatPropertyFee" width="100">
+            <el-table-column prop="linkMan" label="联系人"  width="100">
             </el-table-column>
             <el-table-column label="备注">
                 <template slot-scope="scope">
@@ -27,11 +27,13 @@
                     </el-popover>
                 </template>
             </el-table-column>
-            <el-table-column prop="createTime" label="创建时间" width="120">
+            <el-table-column prop="brand" label="经营品牌" width="120">
             </el-table-column>
-            <el-table-column prop="createEmp" label="创建人">
+            <el-table-column prop="address" label="联系地址">
             </el-table-column>
             <el-table-column prop="modifyTime" label="修改时间" width="120">
+            </el-table-column>
+            <el-table-column prop="enteringTime" label="进场时间" width="120">
             </el-table-column>
             <el-table-column prop="modifyEmp" label="修改人">
             </el-table-column>
@@ -56,16 +58,18 @@
 </template>
 
 <script>
-    import {getHouseListPage, removeHouse} from "@/api/api";
+
+    import {getMerchantListPage} from "@/api/api";
 
     export default {
-        name: "HouseList",
+        name: "MerchantList",
         props: {
-            filtersHouseCode: String
+            filtersMerchantCode: String,
+            filtersCompany:String
         },
         data() {
             return {
-                houseList: [],
+                merchantList: [],
                 total: 0,
                 page: 1,
                 listLoading: false,
@@ -81,11 +85,11 @@
                 };
                 this.listLoading = true;
                 console.log(para);
-                getHouseListPage(para).then((res) => {
+                getMerchantListPage(para).then((res) => {
                     let {msg, success} = res.data;
                     if (success) {
                         this.total = res.data.totalPages;
-                        this.houseList = res.data.data;
+                        this.merchantList = res.data.data;
                         console.log(res.data);
                         this.listLoading = false;
                     } else {
@@ -129,17 +133,10 @@
                 this.page = val;
                 this.getList();
             },
-            formatRentFee:function (row) {
-                return row.rentFee/100;
-            },
-            formatPropertyFee:function (row) {
-                return row.propertyFee/100;
-            },
             showStatusText:function (row) {
                 switch (row.status) {
-                    case 0:return "不可出租";
-                    case 1:return "可出租";
-                    case 2:return "已出租";
+                    case 0:return "未签约";
+                    case 1:return "已签约";
                 }
             }
         },

@@ -16,15 +16,16 @@
         </el-col>
 
         <house-list ref="houseListRef" :filtersHouseCode="filtersHouseCode"></house-list>
-
+        <house-add ref="houseAddRef" @getList="getList"></house-add>
     </section>
 </template>
 
 <script>
     import HouseList from "@/views/house/components/HouseList";
+    import HouseAdd from "@/views/house/components/HouseAdd";
     export default {
         name: "House",
-        components: {HouseList},
+        components: {HouseAdd, HouseList},
         data(){
             return{
                 filtersHouseCode:''
@@ -32,10 +33,10 @@
         },
         methods:{
             getList:function () {
-               this.$refs.houseListRef.getList();
+                this.$refs.houseListRef.getList();
             },
             handleAdd:function () {
-
+                this.$refs.houseAddRef.handleAdd();
             }
         }
     }
