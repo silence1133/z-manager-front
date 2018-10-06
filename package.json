@@ -7,12 +7,22 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "element-theme": "^2.0.1",
+    "element-theme-default": "^1.4.13",
+    "element-ui": "^2.4.8",
+    "font-awesome": "^4.7.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-service": "^3.0.1",
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.0",
     "vue-template-compiler": "^2.5.17"
   }
 }

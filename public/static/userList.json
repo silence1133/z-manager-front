@@ -1,0 +1,16 @@
+{
+  "code": 180100000,
+  "msg": "操作成功",
+  "success": true,
+  "data":[
+    {
+      "id": 2,
+      "account": "admin-1",
+      "password": "123756",
+      "createTime": "2018-09-22 17:06:07",
+      "name": "admin-1",
+      "roleType": 2,
+      "updateTime": null
+    }
+  ]
+}
