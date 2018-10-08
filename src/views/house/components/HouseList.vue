@@ -37,10 +37,10 @@
             </el-table-column>
             <el-table-column prop="status" label="状态" :formatter="showStatusText">
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="140">
+            <el-table-column label="操作" fixed="right" width="120">
                 <template slot-scope="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+                    <el-button type="warning" size="small" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
+                    <el-button type="danger" size="small"  icon="el-icon-delete" circle @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>
                 </template>
             </el-table-column>
         </el-table>

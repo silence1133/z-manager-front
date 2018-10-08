@@ -5,7 +5,6 @@ import routes from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
-import 'element-theme-default'
 import 'font-awesome/css/font-awesome.min.css'
 
 //使用插件

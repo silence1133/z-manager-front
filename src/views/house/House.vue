@@ -7,10 +7,10 @@
                     <el-input v-model="filtersHouseCode" placeholder="门牌号"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="getList">查询</el-button>
+                    <el-button type="primary" @click="getList" icon="el-icon-search" size="medium">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="handleAdd">新增</el-button>
+                    <el-button type="primary" @click="handleAdd" icon="el-icon-circle-plus-outline" size="medium">新增</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
