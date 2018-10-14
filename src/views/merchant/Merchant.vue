@@ -27,17 +27,15 @@
         </el-col>
         <merchant-list ref="merchantListRef" :filtersMerchantCode="filtersMerchantCode" :filtersCompany="filtersCompany"></merchant-list>
         <merchant-add ref="merchantAddRef" @getList="getList"></merchant-add>
-        <contract-add ref="contractAddRef"></contract-add>
     </section>
 </template>
 
 <script>
     import MerchantList from "@/views/merchant/components/MerchantList";
     import MerchantAdd from "@/views/merchant/components/MerchantAdd";
-    import ContractAdd from "@/views/contract/components/ContractAdd";
     export default {
         name: "Merchant",
-        components: {ContractAdd, MerchantAdd, MerchantList},
+        components: {MerchantAdd, MerchantList},
         data(){
             return{
                 filtersMerchantCode:'',
@@ -52,7 +50,16 @@
                 this.$refs.merchantAddRef.handleAdd();
             },
             handleAddContract:function () {
-                this.$refs.contractAddRef.handleAdd();
+                if(this.$refs.merchantListRef.sels.length !== 1){
+                    this.$message({
+                        message: "请选择一条记录进行操作",
+                        type: 'error'
+                    });
+                    return;
+                }
+                let id = this.$refs.merchantListRef.sels[0].id;
+                let merchantCode = this.$refs.merchantListRef.sels[0].merchantCode;
+                this.$router.push(`/contractAdd/${id}/${merchantCode}`);
             }
         }
     }

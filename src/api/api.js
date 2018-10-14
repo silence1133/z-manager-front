@@ -24,3 +24,8 @@ export const getMerchantListPage = params => { return axios.get(`${base}/merchan
 export const addMerchant = params => { return axios.post(`${base}/merchant/add`,params).then(res => res.data); };
 
 export const removeMerchant = params => { return axios.post(`${base}/merchant/delete/`+params).then(res => res.data); };
+
+export const addContract = params => { return axios.post(`${base}/contract/add`,params).then(res => res.data); };
+
+export const getContractListPage = params => { return axios.get(`${base}/contractList.json`, params); };
+

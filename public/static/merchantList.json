@@ -19,6 +19,23 @@
     "modifyTime": "2018-09-22 17:06:07",
     "modifyEmp": "zxy",
     "status": 1
+  },{
+    "id": 2,
+    "merchantCode": 3235,
+    "company": "汽车之家33",
+    "corporateBody": "李3三",
+    "idCard": 4216826866886868,
+    "linkMan": "张dd",
+    "linkPhone": 352324233,
+    "brand": "宝马奔驰",
+    "address": "范德萨发生大发生的",
+    "remarks": "dfsasdfasd",
+    "enteringTime": "2018-09-09 12:00:000",
+    "createTime": "2018-09-22 17:06:07",
+    "createEmp": "zxy",
+    "modifyTime": "2018-09-22 17:06:07",
+    "modifyEmp": "zxy",
+    "status": 1
   }],
   "totalPages":1
 }

@@ -1,0 +1,38 @@
+{
+  "code": 180100000,
+  "msg": "操作成功",
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "merchantCode": "23234",
+      "contractCode": "5453243",
+      "company": "汽车之家",
+      "corporateBody": "李三",
+      "linkMan": "张孝勇",
+      "linkPhone": "352324233",
+      "business": "经营业务",
+      "cashBledge": 100000,
+      "startDate": "2018-09-11 12:00:00",
+      "endDate": "2019-09-11 12:00:00",
+      "electricFee": 20000,
+      "waterFee": 10000,
+      "contractTime": "2019-09-11 11:00:00",
+      "rentYear": 2,
+      "house": [
+        {
+          "houseId": 2342423,
+          "houseCode": "3#342-1",
+          "rentFee": 10000,
+          "propertyFee": 20000
+        }
+      ],
+      "remarks": "dfsasdfasd",
+      "enteringTime": "2018-09-09 12:00:000",
+      "createTime": "2018-09-22 17:06:07",
+      "createEmp": "zxy",
+      "status": 1
+    }
+  ],
+  "totalPages": 1
+}

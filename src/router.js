@@ -9,6 +9,8 @@ import Finance from './views/finance/Finance'
 import Report from './views/finance/Report'
 import Material from './views/material/Material'
 import Contract from './views/contract/Contract'
+import ContractAdd from './views/contract/ContractAdd'
+
 
 let routes = [
     {
@@ -41,7 +43,8 @@ let routes = [
         children: [
             {path: '/house', component: House, name: '商铺管理'},
             {path: '/merchant', component: Merchant, name: '商户管理'},
-            {path: '/contract', component: Contract, name: '合同管理'}
+            {path: '/contract', component: Contract, name: '合同管理'},
+            {path: '/contractAdd/:id/:merchantCode', component: ContractAdd, name: '添加合同', hidden: true},
         ]
     },
     {
