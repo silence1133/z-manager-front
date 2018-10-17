@@ -29,3 +29,7 @@ export const addContract = params => { return axios.post(`${base}/contract/add`,
 
 export const getContractListPage = params => { return axios.get(`${base}/contractList.json`, params); };
 
+export const addWaterMeter = params => { return axios.post(`${base}/waterMeter/add`,params).then(res => res.data); };
+
+export const addElectricMeter = params => { return axios.post(`${base}/electricMeter/add`,params).then(res => res.data); };
+

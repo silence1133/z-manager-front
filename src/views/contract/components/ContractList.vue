@@ -49,12 +49,15 @@
                     </el-popover>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="120">
+            <el-table-column label="操作" fixed="right" width="130">
                 <template slot-scope="scope">
-                    <el-button type="warning" size="small" icon="el-icon-edit" circle
+<!--                    <el-button type="warning" size="small" icon="el-icon-edit" circle
                                @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
                     <el-button type="danger" size="small" icon="el-icon-delete" circle
-                               @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>
+                               @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>-->
+                    <el-button type="text" size="small" @click="addWaterMeter(scope.$index, scope.row)">添加水表</el-button>
+                    <el-button type="text" size="small" @click="addElectricMeter(scope.$index, scope.row)">添加电表</el-button>
+
                 </template>
             </el-table-column>
         </el-table>
@@ -66,15 +69,21 @@
                            :total="total" style="float:right;">
             </el-pagination>
         </el-col>
+
+        <water-meter-add ref="waterMeterAddRef"></water-meter-add>
+        <electric-meter-add ref="electricMeterAddRef"></electric-meter-add>
     </div>
 </template>
 
 <script>
 
     import {getContractListPage} from "@/api/api";
+    import WaterMeterAdd from "@/views/contract/components/WaterMeterAdd";
+    import ElectricMeterAdd from "@/views/contract/components/ElectricMeterAdd";
 
     export default {
         name: "ContractList",
+        components: {ElectricMeterAdd, WaterMeterAdd},
         props: {
             filtersContractCode: String,
             filtersMerchantCode: String,
@@ -144,6 +153,12 @@
             },
             formatFen2Yuan:function (row, column, cellValue) {
                 return cellValue/100;
+            },
+            addWaterMeter:function (index, row) {
+                this.$refs.waterMeterAddRef.handleAdd(row.id,row.contractCode);
+            },
+            addElectricMeter:function (index, row) {
+                this.$refs.electricMeterAddRef.handleAdd(row.id,row.contractCode);
             }
         },
         mounted() {
