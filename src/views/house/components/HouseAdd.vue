@@ -1,7 +1,7 @@
 <template>
     <!--新增界面-->
     <el-dialog title="新增商铺" :visible.sync="addFormVisible" :close-on-click-modal="false" width="40%">
-        <el-form :model="addForm" label-width="110px" :rules="addFormRules" ref="addForm" >
+        <el-form :model="addForm" label-width="110px" :rules="addFormRules" ref="addForm">
             <el-form-item label="商铺编号" prop="houseCode">
                 <el-input v-model="addForm.houseCode" :maxlength="maxlength"></el-input>
             </el-form-item>
@@ -11,7 +11,7 @@
             <el-form-item label="面积" prop="area">
                 <el-row :gutter="6">
                     <el-col :span="12">
-                    <el-input v-model.number="addForm.area" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="addForm.area" :maxlength="maxlength"></el-input>
                     </el-col>
                     <el-col :span="4">㎡</el-col>
                 </el-row>
@@ -19,7 +19,7 @@
             <el-form-item label="参考租金单价" prop="rentFee">
                 <el-row :gutter="6">
                     <el-col :span="12">
-                    <el-input v-model.number="addForm.rentFee" :maxlength="maxlength" ></el-input>
+                        <el-input v-model.number="addForm.rentFee" :maxlength="maxlength"></el-input>
                     </el-col>
                     <el-col :span="4">元/平/月</el-col>
                 </el-row>
@@ -31,6 +31,12 @@
                     </el-col>
                     <el-col :span="4">元/平/月</el-col>
                 </el-row>
+            </el-form-item>
+            <el-form-item label="商铺状态" prop="status">
+                <el-radio-group v-model="addForm.status">
+                    <el-radio :label="1">可出租</el-radio>
+                    <el-radio :label="0">不可出租</el-radio>
+                </el-radio-group>
             </el-form-item>
             <el-form-item label="备注" prop="remarks">
                 <el-input v-model="addForm.remarks" :maxlength="maxlength" type="textarea"></el-input>
@@ -59,17 +65,17 @@
                     area: [
                         {required: true, message: '请输入账号', trigger: 'blur'},
                     ],
-                    rentFee:[
-                        { required: true, message: '租金不能为空'},
-                        { type: 'number', message: '租金必须为数字值'}
+                    rentFee: [
+                        {required: true, message: '租金不能为空'},
+                        {type: 'number', message: '租金必须为数字值'}
                     ],
-                    propertyFee:[
-                        { required: true, message: '物业费不能为空'},
-                        { type: 'number', message: '物业费必须为数字值'}
+                    propertyFee: [
+                        {required: true, message: '物业费不能为空'},
+                        {type: 'number', message: '物业费必须为数字值'}
                     ],
-                    area:[
-                        { required: true, message: '面积不能为空'},
-                        { type: 'number', message: '面积必须为数字值'}
+                    area: [
+                        {required: true, message: '面积不能为空'},
+                        {type: 'number', message: '面积必须为数字值'}
                     ]
                 },
                 //新增界面数据
@@ -77,43 +83,46 @@
                     houseCode: '',
                     address: '',
                     area: '',
-                    rentFee: '',
-                    propertyFee: '',
-                    remarks:''
+                    rentFee: null,
+                    propertyFee: null,
+                    remarks: '',
+                    status: 1
                 },
                 maxlength: 10
             }
         },
-        methods:{
+        methods: {
             //显示新增界面
             handleAdd: function () {
                 this.addFormVisible = true;
-                this.$refs['addForm'].resetFields();
                 this.addForm = {
                     houseCode: '',
                     address: '',
                     area: '',
-                    rentFee: '',
-                    propertyFee: '',
-                    remarks:''
+                    rentFee: null,
+                    propertyFee: null,
+                    remarks: '',
+                    status: 1
                 };
             },
-            addSubmit:function () {
+            addSubmit: function () {
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let addParams = Object.assign({}, this.addForm);
+                            //元转化为分提交给后段
+                            addParams.rentFee = addParams.rentFee * 100;
+                            addParams.propertyFee = addParams.propertyFee * 100;
                             addHouse(addParams).then((res) => {
-                                console.log(res.data);
+                                console.log(res);
                                 this.addLoading = false;
-                                let {msg, success} = res.data;
+                                let {msg, success} = res;
                                 if (success) {
                                     this.$message({
                                         message: msg,
                                         type: 'success'
                                     });
-                                    this.$refs['addForm'].resetFields();
                                     this.addFormVisible = false;
                                     this.$emit('getList');
                                 } else {

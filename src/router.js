@@ -38,7 +38,7 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '商户管理',
+        name: '商户合同管理',
         iconCls: 'fa fa-address-card',//图标样式class
         children: [
             {path: '/house', component: House, name: '商铺管理'},

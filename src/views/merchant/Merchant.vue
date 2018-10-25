@@ -5,14 +5,10 @@
             <el-form :inline="true">
                 <el-form-item>
                     <el-row :gutter="6">
-                        <el-col :span="12">
-                            <el-input v-model="filtersMerchantCode" placeholder="商户编号"></el-input>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-input v-model="filtersCompany" placeholder="公司名称"></el-input>
+                        <el-col :span="24">
+                            <el-input v-model="filtersKeyword" placeholder="关键字"></el-input>
                         </el-col>
                     </el-row>
-
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getList" icon="el-icon-search" size="medium">查询</el-button>
@@ -25,7 +21,7 @@
                 </el-form-item>
             </el-form>
         </el-col>
-        <merchant-list ref="merchantListRef" :filtersMerchantCode="filtersMerchantCode" :filtersCompany="filtersCompany"></merchant-list>
+        <merchant-list ref="merchantListRef" :filtersKeyword="filtersKeyword"></merchant-list>
         <merchant-add ref="merchantAddRef" @getList="getList"></merchant-add>
     </section>
 </template>
@@ -38,8 +34,7 @@
         components: {MerchantAdd, MerchantList},
         data(){
             return{
-                filtersMerchantCode:'',
-                filtersCompany:''
+                filtersKeyword:''
             }
         },
         methods:{

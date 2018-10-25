@@ -31,13 +31,13 @@
             </el-table-column>
             <el-table-column prop="address" label="联系地址">
             </el-table-column>
-            <el-table-column prop="modifyTime" label="修改时间" width="120">
-            </el-table-column>
             <el-table-column prop="enteringTime" label="进场时间" width="120">
             </el-table-column>
-            <el-table-column prop="modifyEmp" label="修改人">
-            </el-table-column>
             <el-table-column prop="status" label="状态" :formatter="showStatusText">
+            </el-table-column>
+            <el-table-column prop="modifyTime" label="修改时间" width="120">
+            </el-table-column>
+            <el-table-column prop="modifyEmp" label="修改人">
             </el-table-column>
             <el-table-column label="操作" fixed="right" width="120">
                 <template slot-scope="scope">
@@ -50,8 +50,8 @@
         <!--工具条-->
         <el-col :span="24" class="toolbar">
             <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20"
-                           :total="total" style="float:right;">
+            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange"
+                           :page-count="total" style="float:right;">
             </el-pagination>
         </el-col>
     </div>
@@ -64,8 +64,7 @@
     export default {
         name: "MerchantList",
         props: {
-            filtersMerchantCode: String,
-            filtersCompany:String
+            filtersKeyword: String
         },
         data() {
             return {
@@ -80,8 +79,8 @@
             //获取列表数据
             getList() {
                 let para = {
-                    page: this.page,
-                    name: this.filtersHouseCode,
+                    pageNum: this.page,
+                    keyWord: this.filtersKeyword
                 };
                 this.listLoading = true;
                 console.log(para);

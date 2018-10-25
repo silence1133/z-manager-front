@@ -2,7 +2,7 @@
     <div class="mainContain">
         <el-form :model="loginForm" :rules="loginRule" ref="loginForm" label-position="left" label-width="0px"
                  class="demo-ruleForm login-container">
-            <h2 style="text-align: center">xxxx管理系统</h2>
+            <h2 style="text-align: center">太平洋汽车城管理系统</h2>
             <h3 class="title">系统登录</h3>
             <el-form-item prop="account">
                 <el-input type="text" v-model="loginForm.account" auto-complete="off" placeholder="账号"></el-input>

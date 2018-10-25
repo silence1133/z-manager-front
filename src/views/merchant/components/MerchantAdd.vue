@@ -41,7 +41,7 @@
                 </el-col>
             </el-row>
             <el-form-item label="入场时间" prop="enteringTime">
-                <el-date-picker type="date" placeholder="选择日期" v-model="addForm.enteringTime" ></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="addForm.enteringTime" value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
             <el-form-item label="经营品牌" prop="brand">
                 <el-input v-model="addForm.brand" ></el-input>
@@ -118,15 +118,14 @@
                             this.addLoading = true;
                             let addParams = Object.assign({}, this.addForm);
                             addMerchant(addParams).then((res) => {
-                                console.log(res.data);
+                                console.log(res);
                                 this.addLoading = false;
-                                let {msg, success} = res.data;
+                                let {msg, success} = res;
                                 if (success) {
                                     this.$message({
                                         message: msg,
                                         type: 'success'
                                     });
-                                    this.$refs['addForm'].resetFields();
                                     this.addFormVisible = false;
                                     this.$emit('getList');
                                 } else {

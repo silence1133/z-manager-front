@@ -11,11 +11,11 @@
             </el-table-column>
             <el-table-column prop="address" label="地址" width="120">
             </el-table-column>
-            <el-table-column prop="area" label="面积（㎡）">
+            <el-table-column prop="area" label="面积（㎡）" width="120">
             </el-table-column>
-            <el-table-column prop="rentFee" label="参考出租单价（元/㎡）" :formatter="formatRentFee" width="100">
+            <el-table-column prop="rentFee" label="参考出租单价（元/㎡）" :formatter="formatFen2Yuan" width="120">
             </el-table-column>
-            <el-table-column prop="propertyFee" label="参考物业费（元/㎡）" :formatter="formatPropertyFee" width="100">
+            <el-table-column prop="propertyFee" label="参考物业费（元/㎡）" :formatter="formatFen2Yuan" width="120">
             </el-table-column>
             <el-table-column label="备注">
                 <template slot-scope="scope">
@@ -48,8 +48,8 @@
         <!--工具条-->
         <el-col :span="24" class="toolbar">
             <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-            <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20"
-                           :total="total" style="float:right;">
+            <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange"
+                           :page-count="total" style="float:right;">
             </el-pagination>
         </el-col>
     </div>
@@ -76,8 +76,8 @@
             //获取列表数据
             getList() {
                 let para = {
-                    page: this.page,
-                    name: this.filtersHouseCode,
+                    pageNum: this.page,
+                    keyWord: this.filtersHouseCode,
                 };
                 this.listLoading = true;
                 console.log(para);
@@ -129,19 +129,16 @@
                 this.page = val;
                 this.getList();
             },
-            formatRentFee:function (row) {
-                return row.rentFee/100;
-            },
-            formatPropertyFee:function (row) {
-                return row.propertyFee/100;
-            },
             showStatusText:function (row) {
                 switch (row.status) {
                     case 0:return "不可出租";
                     case 1:return "可出租";
                     case 2:return "已出租";
                 }
-            }
+            },
+            formatFen2Yuan:function (row, column, cellValue) {
+                return cellValue/100;
+            },
         },
         mounted() {
             this.getList();

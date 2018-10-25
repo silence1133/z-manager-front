@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
     if (!user && to.path != '/login') {
         next({ path: '/login' })
     } else {
-        next()
+        next();
     }
 })
 

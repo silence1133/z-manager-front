@@ -74,6 +74,9 @@
 				</div>
 			</section>
 		</el-col>
+		<el-col :span="24" class="myfooter">
+			<div style="left:45%;position:absolute;top:10px;">&copy;&nbsp;silence&cnbo</div>
+		</el-col>
 	</el-row>
 </template>
 
@@ -267,6 +270,12 @@
 					box-sizing: border-box;
 				}
 			}
+		}
+		.myfooter{
+			position: absolute;
+			bottom: 0px;
+			height: 35px;
+			overflow: hidden;
 		}
 	}
 </style>

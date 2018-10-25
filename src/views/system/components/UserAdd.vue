@@ -16,10 +16,10 @@
             </el-form-item>
             <el-form-item label="角色" prop="roleType">
                 <el-radio-group v-model="addForm.roleType">
-                    <el-radio class="radio" label="1">S</el-radio>
-                    <el-radio class="radio" label="2">A</el-radio>
-                    <el-radio class="radio" label="3">B</el-radio>
-                    <el-radio class="radio" label="4">C</el-radio>
+                    <el-radio class="radio" label="1">老板</el-radio>
+                    <el-radio class="radio" label="2">主管</el-radio>
+                    <el-radio class="radio" label="3">普通职员</el-radio>
+                    <el-radio class="radio" label="4">助理</el-radio>
                 </el-radio-group>
             </el-form-item>
         </el-form>
