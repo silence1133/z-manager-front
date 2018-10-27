@@ -29,7 +29,7 @@
             </el-table-column>
             <el-table-column prop="contract.electricFee" label="电费单价（元/度）" width="120" :formatter="formatFen2Yuan">
             </el-table-column>
-            <el-table-column prop="contract.waterFee" label="水费单价（元/度）">
+            <el-table-column prop="contract.waterFee" label="水费单价（元/度）" :formatter="formatFen2Yuan">
             </el-table-column>
             <el-table-column prop="contract.contractTime" label="合同签订时间" width="120">
             </el-table-column>
@@ -42,8 +42,10 @@
                     <el-popover trigger="click" placement="left">
                         <el-table :data="scope.row.houseList">
                             <el-table-column width="150" property="houseCode" label="商铺编号"></el-table-column>
-                            <el-table-column width="150" property="rentFee" label="租金(元/平/月)" :formatter="formatFen2Yuan"></el-table-column>
-                            <el-table-column width="150" property="propertyFee" label="物业费(元/平/月)" :formatter="formatFen2Yuan"></el-table-column>
+                            <el-table-column width="150" property="rentFee" label="租金(元/平/月)"
+                                             :formatter="formatFen2Yuan"></el-table-column>
+                            <el-table-column width="150" property="propertyFee" label="物业费(元/平/月)"
+                                             :formatter="formatFen2Yuan"></el-table-column>
                         </el-table>
                         <el-button slot="reference" size="small" type="info">查看商铺详情</el-button>
                     </el-popover>
@@ -51,12 +53,13 @@
             </el-table-column>
             <el-table-column label="操作" fixed="right" width="130">
                 <template slot-scope="scope">
-<!--                    <el-button type="warning" size="small" icon="el-icon-edit" circle
-                               @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
-                    <el-button type="danger" size="small" icon="el-icon-delete" circle
-                               @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>-->
+                    <!--                    <el-button type="warning" size="small" icon="el-icon-edit" circle
+                                                   @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
+                                        <el-button type="danger" size="small" icon="el-icon-delete" circle
+                                                   @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>-->
                     <el-button type="text" size="small" @click="addWaterMeter(scope.$index, scope.row)">添加水表</el-button>
-                    <el-button type="text" size="small" @click="addElectricMeter(scope.$index, scope.row)">添加电表</el-button>
+                    <el-button type="text" size="small" @click="addElectricMeter(scope.$index, scope.row)">添加电表
+                    </el-button>
 
                 </template>
             </el-table-column>
@@ -85,9 +88,7 @@
         name: "ContractList",
         components: {ElectricMeterAdd, WaterMeterAdd},
         props: {
-            filtersContractCode: String,
-            filtersMerchantCode: String,
-            filtersCompany: String
+            filtersKeyword: String
         },
         data() {
             return {
@@ -103,9 +104,7 @@
             getList() {
                 let para = {
                     pageNum: this.page,
-                    contractCode: this.filtersContractCode,
-                    merchantCode: this.filtersMerchantCode,
-                    company: this.filtersCompany,
+                    keyWord: this.filtersKeyword
                 };
                 this.listLoading = true;
                 console.log(para);
@@ -151,14 +150,14 @@
                         return "已签约";
                 }
             },
-            formatFen2Yuan:function (row, column, cellValue) {
-                return cellValue/100;
+            formatFen2Yuan: function (row, column, cellValue) {
+                return cellValue / 100;
             },
-            addWaterMeter:function (index, row) {
-                this.$refs.waterMeterAddRef.handleAdd(row.id,row.contractCode);
+            addWaterMeter: function (index, row) {
+                this.$refs.waterMeterAddRef.handleAdd(row.contract.id);
             },
-            addElectricMeter:function (index, row) {
-                this.$refs.electricMeterAddRef.handleAdd(row.id,row.contractCode);
+            addElectricMeter: function (index, row) {
+                this.$refs.electricMeterAddRef.handleAdd(row.contract.id);
             }
         },
         mounted() {

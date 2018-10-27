@@ -1,7 +1,7 @@
 <template>
     <el-dialog title="新增电表" :visible.sync="addFormVisible" :close-on-click-modal="false" width="30%">
         <el-form :model="addForm" label-width="110px" :rules="addFormRules" ref="addForm">
-            <el-form-item label="水表编号" prop="electricMeterCode">
+            <el-form-item label="电表编号" prop="electricMeterCode">
                 <el-input v-model="addForm.electricMeterCode"></el-input>
             </el-form-item>
             <el-form-item label="初始刻度" prop="initMark">
@@ -38,7 +38,7 @@
                 addLoading: false,
                 addFormRules: {
                     electricMeterCode: [
-                        {required: true, message: '请输入水表的编号', trigger: 'blur'},
+                        {required: true, message: '请输入电表的编号', trigger: 'blur'},
                     ],
                     initMark: [
                         {required: true, message: '初始刻度不能为空'},
@@ -53,8 +53,7 @@
                     voltage: '',
                     electricCurrent: '',
                     magnification: '',
-                    contractId: 0,
-                    contractCode: ''
+                    contractId: 0
                 }
             }
         },
@@ -69,8 +68,7 @@
                     voltage: '',
                     electricCurrent: '',
                     magnification: '',
-                    contractId: contractId,
-                    contractCode: ''
+                    contractId: contractId
                 };
                 console.log(this.addForm);
             },
@@ -83,13 +81,12 @@
                             addElectricMeter(addParams).then((res) => {
                                 console.log(res.data);
                                 this.addLoading = false;
-                                let {msg, success} = res.data;
+                                let {msg, success} = res;
                                 if (success) {
                                     this.$message({
                                         message: msg,
                                         type: 'success'
                                     });
-                                    this.$refs['addForm'].resetFields();
                                     this.addFormVisible = false;
                                     this.$emit('getList');
                                 } else {

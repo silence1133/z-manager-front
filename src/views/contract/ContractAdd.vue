@@ -182,6 +182,11 @@
                             this.addForm.contract.startDate = this.addForm.contract.contractDateRange[0];
                             this.addForm.contract.endDate = this.addForm.contract.contractDateRange[1];
                             let addParams = Object.assign({}, this.addForm);
+
+                            this.addForm.contract.cashBledge =  this.addForm.contract.cashBledge*100;
+                            this.addForm.contract.electricFee = this.addForm.contract.electricFee*100;
+                            this.addForm.contract.waterFee = this.addForm.contract.waterFee*100;
+
                             console.log(addParams);
                             addContract(addParams).then((res) => {
                                 console.log(res);
@@ -209,14 +214,14 @@
                 this.$router.push('/merchant');
             },
             setHouseList(val) {
-                val.forEach(function (x) {
+                let houseList = [].concat(JSON.parse(JSON.stringify(val)));//拷贝数组,注意这行的拷贝方法
+                houseList.forEach(function (x) {
                     delete x.houseCode;
                     x.rentFee = x.rentFee * 100;
                     x.propertyFee = x.propertyFee * 100;
                 })
-                console.log(val);
-                this.addForm.houseList = val;
-                console.log(this.addForm);
+                this.addForm.houseList = houseList;
+                console.log(this.addForm.houseList);
             }
         }
     }

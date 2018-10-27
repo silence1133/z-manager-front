@@ -31,6 +31,8 @@ router.beforeEach((to, from, next) => {
     }
 })
 
+export const toLogin = ()  => {router.push("/login")};
+
 
 new Vue({
     router,

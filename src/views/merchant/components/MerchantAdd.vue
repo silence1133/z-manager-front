@@ -5,12 +5,12 @@
             <el-row :gutter="2">
                 <el-col :span="8">
                     <el-form-item label="商户编号" prop="merchantCode">
-                        <el-input v-model="addForm.merchantCode" :maxlength="maxlength"></el-input>
+                        <el-input v-model="addForm.merchantCode"  ></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="16">
                     <el-form-item label="身份证（营业执照号码）" prop="idCard" label-width="180px">
-                        <el-input v-model.number="addForm.idCard" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="addForm.idCard" ></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -18,12 +18,12 @@
             <el-row :gutter="2">
                 <el-col :span="10">
                     <el-form-item label="法人" prop="corporateBody">
-                        <el-input v-model.number="addForm.corporateBody" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="addForm.corporateBody"  ></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="14">
                     <el-form-item label="公司名称" prop="company">
-                        <el-input v-model="addForm.company" :maxlength="maxlength"></el-input>
+                        <el-input v-model="addForm.company"  ></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -31,12 +31,12 @@
             <el-row :gutter="2">
                 <el-col :span="10">
                     <el-form-item label="联系人" prop="linkMan">
-                        <el-input v-model="addForm.linkMan" :maxlength="maxlength"></el-input>
+                        <el-input v-model="addForm.linkMan"  ></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="14">
                     <el-form-item label="联系电话" prop="linkPhone">
-                        <el-input v-model="addForm.linkPhone" :maxlength="maxlength"></el-input>
+                        <el-input v-model="addForm.linkPhone" ></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -47,10 +47,10 @@
                 <el-input v-model="addForm.brand" ></el-input>
             </el-form-item>
             <el-form-item label="公司地址" prop="address">
-                <el-input v-model="addForm.address" :maxlength="maxlength"></el-input>
+                <el-input v-model="addForm.address"></el-input>
             </el-form-item>
             <el-form-item label="备注" prop="remarks">
-                <el-input v-model="addForm.remarks" :maxlength="maxlength" type="textarea"></el-input>
+                <el-input v-model="addForm.remarks"  type="textarea"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer">
@@ -89,8 +89,7 @@
                     address: '',
                     enteringTime: '',
                     remarks: ''
-                },
-                maxlength: 10
+                }
             }
         },
         methods: {

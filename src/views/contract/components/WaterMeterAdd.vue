@@ -41,21 +41,19 @@
                     waterMeterCode: '',
                     initMark: '',
                     remarks:'',
-                    contractId:0,
-                    contractCode:''
+                    contractId:0
                 }
             }
         },
         methods:{
             //显示新增界面
-            handleAdd: function (contractId,contractCode) {
+            handleAdd: function (contractId) {
                 this.addFormVisible = true;
                 this.addForm = {
                     waterMeterCode: '',
                     initMark: '',
                     remarks:'',
-                    contractId:contractId,
-                    contractCode:contractCode
+                    contractId:contractId
                 };
                 console.log(this.addForm);
             },
@@ -65,16 +63,16 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let addParams = Object.assign({}, this.addForm);
+
                             addWaterMeter(addParams).then((res) => {
                                 console.log(res.data);
                                 this.addLoading = false;
-                                let {msg, success} = res.data;
+                                let {msg, success} = res;
                                 if (success) {
                                     this.$message({
                                         message: msg,
                                         type: 'success'
                                     });
-                                    this.$refs['addForm'].resetFields();
                                     this.addFormVisible = false;
                                     this.$emit('getList');
                                 } else {

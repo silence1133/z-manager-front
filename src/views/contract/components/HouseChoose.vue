@@ -61,6 +61,7 @@
         methods: {
             handleClose(tag) {
                 this.houseList.splice(this.houseList.indexOf(tag), 1);
+                this.$emit('setHouseList', this.houseList);
             },
 
             showInput() {

@@ -19,11 +19,21 @@
                 <el-table-column prop="rentFeeNeed" label="应缴（元）" width="100">
                 </el-table-column>
                 <el-table-column prop="rentFeePaid" label="已缴（元）" width="100">
+                    <template slot-scope="scope">
+                        <el-popover trigger="click" placement="left">
+                            <el-table :data="scope.row.payDetail" style="overflow:scroll;height: 200px;">
+                                <el-table-column width="150" property="payDate" label="缴费时间"></el-table-column>
+                                <el-table-column width="150" property="fee" label="缴费金额"></el-table-column>
+                                <el-table-column width="150" property="dealMan" label="收费人"></el-table-column>
+                            </el-table>
+                            <el-button slot="reference" type="text">{{scope.row.rentFeePaid}}</el-button>
+                        </el-popover>
+                    </template>
                 </el-table-column>
                 <el-table-column prop="rentFeeLeft" label="剩余应缴（元）" width="100">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.rentFeeDetail">
+                            <el-table :data="scope.row.rentFeeDetail" style="overflow:scroll;height: 200px;">
                                 <el-table-column width="150" property="feeDate" label="应缴日期"></el-table-column>
                                 <el-table-column width="150" property="needFee" label="应缴"></el-table-column>
                                 <el-table-column width="150" property="paidFee" label="已缴"></el-table-column>
@@ -37,6 +47,16 @@
                 <el-table-column prop="propertyFeeNeed" label="应缴（元）" width="100">
                 </el-table-column>
                 <el-table-column prop="propertyFeePaid" label="已缴（元）" width="100">
+                    <template slot-scope="scope">
+                        <el-popover trigger="click" placement="left">
+                            <el-table :data="scope.row.payDetail" style="overflow:scroll;height: 200px;">
+                                <el-table-column width="150" property="payDate" label="缴费时间"></el-table-column>
+                                <el-table-column width="150" property="fee" label="缴费金额"></el-table-column>
+                                <el-table-column width="150" property="dealMan" label="收费人"></el-table-column>
+                            </el-table>
+                            <el-button slot="reference" type="text">{{scope.row.propertyFeePaid}}</el-button>
+                        </el-popover>
+                    </template>
                 </el-table-column>
                 <el-table-column prop="propertyFeeLeft" label="剩余应缴（元）" width="100">
                     <template slot-scope="scope">
@@ -55,36 +75,36 @@
                 <el-table-column prop="waterFeeNeed" label="应缴（元）" width="100">
                 </el-table-column>
                 <el-table-column prop="waterFeePaid" label="已缴（元）" width="100">
-                </el-table-column>
-                <el-table-column prop="waterFeeLeft" label="剩余应缴（元）" width="100">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.rentFeeDetail">
-                                <el-table-column width="150" property="feeDate" label="应缴日期"></el-table-column>
-                                <el-table-column width="150" property="needFee" label="应缴"></el-table-column>
-                                <el-table-column width="150" property="paidFee" label="已缴"></el-table-column>
+                            <el-table :data="scope.row.payDetail" style="overflow:scroll;height: 200px;">
+                                <el-table-column width="150" property="payDate" label="缴费时间"></el-table-column>
+                                <el-table-column width="150" property="fee" label="缴费金额"></el-table-column>
+                                <el-table-column width="150" property="dealMan" label="收费人"></el-table-column>
                             </el-table>
-                            <el-button slot="reference" type="text">{{scope.row.waterFeeLeft}}</el-button>
+                            <el-button slot="reference" type="text">{{scope.row.waterFeePaid}}</el-button>
                         </el-popover>
                     </template>
+                </el-table-column>
+                <el-table-column prop="waterFeeLeft" label="剩余应缴（元）" width="100">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="电费" header-align="center">
-                <el-table-column prop="electricFeeNeed" label="应缴（元）" width="100">
-                </el-table-column>
-                <el-table-column prop="electricFeePaid" label="已缴（元）" width="100">
-                </el-table-column>
-                <el-table-column prop="electricFeeLeft" label="剩余应缴（元）" width="100">
+                <el-table-column prop="electricFeeNeed" label="已缴（元）" width="100">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.rentFeeDetail">
-                                <el-table-column width="150" property="feeDate" label="应缴日期"></el-table-column>
-                                <el-table-column width="150" property="needFee" label="应缴"></el-table-column>
-                                <el-table-column width="150" property="paidFee" label="已缴"></el-table-column>
+                            <el-table :data="scope.row.payDetail" style="overflow:scroll;height: 200px;">
+                                <el-table-column width="150" property="payDate" label="缴费时间"></el-table-column>
+                                <el-table-column width="150" property="fee" label="缴费金额"></el-table-column>
+                                <el-table-column width="150" property="dealMan" label="收费人"></el-table-column>
                             </el-table>
-                            <el-button slot="reference" type="text">{{scope.row.electricFeeLeft}}</el-button>
+                            <el-button slot="reference" type="text">{{scope.row.electricFeeNeed}}</el-button>
                         </el-popover>
                     </template>
+                </el-table-column>
+                <el-table-column prop="electricFeePaid" label="已用（元）" width="100">
+                </el-table-column>
+                <el-table-column prop="electricFeeLeft" label="剩余（元）" width="100">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="操作" fixed="right" width="80">
@@ -152,6 +172,33 @@
                             needFee: 5000,
                             paidFee: 0
                         }
+                    ],
+                    payDetail:[{
+                        payDate:'2018-11-12 12:30',
+                        fee:500,
+                        dealMan:'zxy'
+                    },{
+                        payDate:'2018-11-12 12:30',
+                        fee:500,
+                        dealMan:'zxy'
+                    },{
+                        payDate:'2018-11-12 12:30',
+                        fee:500,
+                        dealMan:'zxy'
+                    },{
+                        payDate:'2018-11-12 12:30',
+                        fee:500,
+                        dealMan:'zxy'
+                    },{
+                        payDate:'2018-11-12 12:30',
+                        fee:500,
+                        dealMan:'zxy'
+                    },{
+                        payDate:'2018-11-12 12:30',
+                        fee:500,
+                        dealMan:'zxy'
+                    }
+
                     ]
                 }],
                 total: 0,
