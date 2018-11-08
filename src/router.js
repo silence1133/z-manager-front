@@ -10,6 +10,9 @@ import Report from './views/finance/Report'
 import Material from './views/material/Material'
 import Contract from './views/contract/Contract'
 import ContractAdd from './views/contract/ContractAdd'
+import WaterMeter from './views/meter/WaterMeter'
+import ElectricMeter from './views/meter/ElectricMeter'
+import FeePrint from './views/FeePrint.vue'
 
 
 let routes = [
@@ -22,6 +25,12 @@ let routes = [
     {
         path: '/404',
         component: NotFound,
+        name: '',
+        hidden: true
+    },
+    {
+        path: '/print',
+        component: FeePrint,
         name: '',
         hidden: true
     },
@@ -45,6 +54,8 @@ let routes = [
             {path: '/merchant', component: Merchant, name: '商户管理'},
             {path: '/contract', component: Contract, name: '合同管理'},
             {path: '/contractAdd/:id/:merchantCode', component: ContractAdd, name: '添加合同', hidden: true},
+            {path: '/water', component: WaterMeter, name: '水表管理'},
+            {path: '/electric', component: ElectricMeter, name: '电表管理'}
         ]
     },
     {

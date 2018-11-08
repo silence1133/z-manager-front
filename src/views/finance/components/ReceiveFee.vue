@@ -1,8 +1,8 @@
 <template>
     <el-dialog title="缴费" :visible.sync="addFormVisible" :close-on-click-modal="false" width="30%">
-        <el-form :model="addForm" label-width="110px" :rules="addFormRules" ref="addForm" >
+        <el-form :model="addForm" label-width="110px" :rules="addFormRules" ref="addForm">
             <el-form-item label="法人" prop="corporateBody">
-                <strong>{{addForm.corporateBody}}</strong>
+                <strong>{{addForm.coporateBody}}</strong>
             </el-form-item>
             <el-form-item label="公司名称" prop="company">
                 <strong>{{addForm.company}}</strong>
@@ -13,21 +13,18 @@
             <el-form-item label="合同编号" prop="contractCode">
                 <strong>{{addForm.contractCode}}</strong>
             </el-form-item>
-            <el-form-item label="应缴费用">
-                <strong>{{addForm.needFee}}</strong>
-            </el-form-item>
-            <el-form-item label="缴费类型" prop="contractCode">
-                <el-select v-model="addForm.payType" placeholder="缴费类型">
+            <el-form-item label="缴费类型" prop="feeType">
+                <el-select v-model="addForm.feeType" placeholder="缴费类型">
                     <el-option
-                            v-for="item in payTypes"
+                            v-for="item in feeTypes"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="缴费方式" prop="contractCode">
-                <el-select v-model="addForm.payWay" placeholder="缴费方式">
+            <el-form-item label="缴费方式" prop="paidMethod">
+                <el-select v-model="addForm.paidMethod" placeholder="缴费方式">
                     <el-option
                             v-for="item in payWays"
                             :key="item.value"
@@ -36,8 +33,14 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="本次缴费" prop="payFee">
-                <el-input v-model="addForm.payFee" style="width: 130px;"></el-input>
+            <el-form-item label="缴费人" prop="paidMan">
+                <el-input v-model="addForm.paidMan" style="width: 130px;"></el-input>
+            </el-form-item>
+            <el-form-item label="缴费金额" prop="paidFee">
+                <el-input v-model.number="addForm.paidFee" style="width: 130px;"></el-input>&nbsp;元
+            </el-form-item>
+            <el-form-item label="缴费事由" prop="remarks">
+                <el-input v-model="addForm.remarks" maxlength="20" type="textarea" rows="3"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer">
@@ -48,6 +51,9 @@
 </template>
 
 <script>
+    import {feeTypes, payWays} from "@/api/common";
+    import {addCharge} from "@/api/api";
+
     export default {
         name: "ReceiveFee",
         data() {
@@ -55,69 +61,43 @@
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
                 addFormRules: {
+                    feeType: [
+                        {required: true, message: '请选择缴费类型', trigger: 'blur'},
+                    ],
+                    payWay: [
+                        {required: true, message: '请选择缴费方式', trigger: 'blur'},
+                    ],
+                    paidMan: [
+                        {required: true, message: '请输入缴费人', trigger: 'blur'},
+                    ],
+                    paidFee: [
+                        {required: true, message: '请填写缴费金额', trigger: 'blur'},
+                        {type: 'number', message: '租金必须为数字值'}
+                    ],
+                    remarks: [
+                        {required: true, message: '请填写缴费是事由', trigger: 'blur'},
+                    ]
                 },
-                needFee:5000,
                 //新增界面数据
-                addForm: {
-                    merchantCode:'',
-                    company:'',
-                    corporateBody:'',
-                    contractCode:'',
-                    needFee:5000,
-                    payFee:null
-                },
-                payWays: [{
-                    value: '1',
-                    label: '现金'
-                }, {
-                    value: '2',
-                    label: '刷卡'
-                }, {
-                    value: '3',
-                    label: '支付宝'
-                }, {
-                    value: '4',
-                    label: '微信'
-                }, {
-                    value: '5',
-                    label: '转账'
-                }],
-                payTypes: [{
-                    value: '1',
-                    label: '租金'
-                }, {
-                    value: '2',
-                    label: '物业费'
-                }, {
-                    value: '3',
-                    label: '水费'
-                }, {
-                    value: '4',
-                    label: '电费'
-                }]
+                addForm: {},
+                payWays: payWays,
+                feeTypes: feeTypes
             }
         },
-        methods:{
+        methods: {
             //显示新增界面
-            handleAdd: function (row) {
+            handleAdd: function (rowData) {
                 this.addFormVisible = true;
-                this.addForm = {
-                    merchantCode:row.merchantCode,
-                    company:row.company,
-                    corporateBody:row.corporateBody,
-                    contractCode:row.contractCode,
-                    needFee:5000,
-                    payFee:null
-                };
+                this.addForm = rowData;
                 console.log(this.addForm);
             },
-            addSubmit:function () {
+            addSubmit: function () {
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let addParams = Object.assign({}, this.addForm);
-                            addWaterMeter(addParams).then((res) => {
+                            addCharge(addParams).then((res) => {
                                 console.log(res.data);
                                 this.addLoading = false;
                                 let {msg, success} = res.data;

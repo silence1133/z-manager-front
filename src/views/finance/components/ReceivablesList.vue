@@ -7,104 +7,166 @@
             </el-table-column>
             <el-table-column type="index">
             </el-table-column>
-            <el-table-column prop="merchantCode" label="商户编号" width="100">
+            <el-table-column prop="chargeMainInfo.merchantCode" label="商户编号" width="100">
             </el-table-column>
-            <el-table-column prop="company" label="公司" width="120">
+            <el-table-column prop="chargeMainInfo.company" label="公司" width="120">
             </el-table-column>
-            <el-table-column prop="corporateBody" label="法人">
+            <el-table-column prop="chargeMainInfo.coporateBody" label="法人">
             </el-table-column>
-            <el-table-column prop="contractCode" label="合同编号" width="120">
+            <el-table-column prop="chargeMainInfo.contractCode" label="合同编号" width="120">
             </el-table-column>
             <el-table-column label="租金" header-align="center">
-                <el-table-column prop="rentFeeNeed" label="应缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.totalRentFee" label="应缴（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                 </el-table-column>
-                <el-table-column prop="rentFeePaid" label="已缴（元）" width="100">
+                <el-table-column label="已缴（元）" width="100" :formatter="formatFen2Yuan">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.payDetail" style="overflow:scroll;height: 200px;">
-                                <el-table-column width="150" property="payDate" label="缴费时间"></el-table-column>
-                                <el-table-column width="150" property="fee" label="缴费金额"></el-table-column>
-                                <el-table-column width="150" property="dealMan" label="收费人"></el-table-column>
+                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;"
+                                      v-loading="innerListLoading">
+                                <el-table-column width="150" property="paidTime" label="缴费时间"></el-table-column>
+                                <el-table-column width="150" property="paidFee" label="缴费金额"
+                                                 :formatter="formatFen2Yuan"></el-table-column>
+                                <el-table-column width="150" property="chargeMan" label="收费人"></el-table-column>
+                                <el-table-column label="操作">
+                                    <template slot-scope="scope">
+                                        <el-button type="text" size="mini" @click="printDetail(scope.$index, scope.row)"
+                                                   title="打印">打印收据
+                                        </el-button>
+                                    </template>
+                                </el-table-column>
                             </el-table>
-                            <el-button slot="reference" type="text">{{scope.row.rentFeePaid}}</el-button>
+                            <el-button slot="reference" type="text"
+                                       @click="setPaidDetail(scope.row.chargeMainInfo.contractId,0)">
+                                {{formatFen2YuanText(scope.row.chargeMainInfo.paidRentFee)}}
+                            </el-button>
                         </el-popover>
                     </template>
                 </el-table-column>
-                <el-table-column prop="rentFeeLeft" label="剩余应缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.restRentFee" label="剩余应缴（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.rentFeeDetail" style="overflow:scroll;height: 200px;">
-                                <el-table-column width="150" property="feeDate" label="应缴日期"></el-table-column>
-                                <el-table-column width="150" property="needFee" label="应缴"></el-table-column>
-                                <el-table-column width="150" property="paidFee" label="已缴"></el-table-column>
+                            <el-table :data="scope.row.houseFeeList" style="overflow:scroll;height: 200px;">
+                                <el-table-column width="150" property="payDeadline" label="应缴日期"></el-table-column>
+                                <el-table-column width="150" property="totalRentFee" label="应缴"
+                                                 :formatter="formatFen2Yuan"></el-table-column>
+                                <el-table-column width="150" property="paidRentFee" label="已缴"
+                                                 :formatter="formatFen2Yuan"></el-table-column>
                             </el-table>
-                            <el-button slot="reference" type="text">{{scope.row.rentFeeLeft}}</el-button>
+                            <el-button slot="reference" type="text">
+                                {{formatFen2YuanText(scope.row.chargeMainInfo.restRentFee)}}
+                            </el-button>
                         </el-popover>
                     </template>
                 </el-table-column>
             </el-table-column>
             <el-table-column label="物业费" header-align="center">
-                <el-table-column prop="propertyFeeNeed" label="应缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.totalPropertyFee" label="应缴（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                 </el-table-column>
-                <el-table-column prop="propertyFeePaid" label="已缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.paidPropertyFee" label="已缴（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.payDetail" style="overflow:scroll;height: 200px;">
-                                <el-table-column width="150" property="payDate" label="缴费时间"></el-table-column>
-                                <el-table-column width="150" property="fee" label="缴费金额"></el-table-column>
-                                <el-table-column width="150" property="dealMan" label="收费人"></el-table-column>
+                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;">
+                                <el-table-column width="150" property="paidTime" label="缴费时间"></el-table-column>
+                                <el-table-column width="150" property="paidFee" label="缴费金额"
+                                                 :formatter="formatFen2Yuan"></el-table-column>
+                                <el-table-column width="150" property="chargeMan" label="收费人"></el-table-column>
+                                <el-table-column label="操作">
+                                    <template slot-scope="scope">
+                                        <el-button type="text" size="mini" @click="printDetail(scope.$index, scope.row)"
+                                                   title="打印">打印收据
+                                        </el-button>
+                                    </template>
+                                </el-table-column>
                             </el-table>
-                            <el-button slot="reference" type="text">{{scope.row.propertyFeePaid}}</el-button>
+                            <el-button slot="reference" type="text"
+                                       @click="setPaidDetail(scope.row.chargeMainInfo.contractId,1)">
+                                {{formatFen2YuanText(scope.row.chargeMainInfo.paidPropertyFee)}}
+                            </el-button>
                         </el-popover>
                     </template>
                 </el-table-column>
-                <el-table-column prop="propertyFeeLeft" label="剩余应缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.restPropertyFee" label="剩余应缴（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.rentFeeDetail">
-                                <el-table-column width="150" property="feeDate" label="应缴日期"></el-table-column>
-                                <el-table-column width="150" property="needFee" label="应缴"></el-table-column>
-                                <el-table-column width="150" property="paidFee" label="已缴"></el-table-column>
+                            <el-table :data="scope.row.houseFeeList">
+                                <el-table-column width="150" property="payDeadline" label="应缴日期"></el-table-column>
+                                <el-table-column width="150" property="totalPropertyFee" label="应缴"
+                                                 :formatter="formatFen2Yuan"></el-table-column>
+                                <el-table-column width="150" property="paidPropertyFee" label="已缴"
+                                                 :formatter="formatFen2Yuan"></el-table-column>
                             </el-table>
-                            <el-button slot="reference" type="text">{{scope.row.propertyFeeLeft}}</el-button>
+                            <el-button slot="reference" type="text">
+                                {{formatFen2YuanText(scope.row.chargeMainInfo.restPropertyFee)}}
+                            </el-button>
                         </el-popover>
                     </template>
                 </el-table-column>
             </el-table-column>
             <el-table-column label="水费" header-align="center">
-                <el-table-column prop="waterFeeNeed" label="应缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.totalWaterFee" label="应缴（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                 </el-table-column>
-                <el-table-column prop="waterFeePaid" label="已缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.paidWaterFee" label="已缴（元）" width="100">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.payDetail" style="overflow:scroll;height: 200px;">
-                                <el-table-column width="150" property="payDate" label="缴费时间"></el-table-column>
-                                <el-table-column width="150" property="fee" label="缴费金额"></el-table-column>
-                                <el-table-column width="150" property="dealMan" label="收费人"></el-table-column>
+                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;">
+                                <el-table-column width="150" property="paidTime" label="缴费时间"></el-table-column>
+                                <el-table-column width="150" property="paidFee" label="缴费金额"
+                                                 :formatter="formatFen2Yuan"></el-table-column>
+                                <el-table-column width="150" property="chargeMan" label="收费人"></el-table-column>
+                                <el-table-column label="操作">
+                                    <template slot-scope="scope">
+                                        <el-button type="text" size="mini" @click="printDetail(scope.$index, scope.row)"
+                                                   title="打印">打印收据
+                                        </el-button>
+                                    </template>
+                                </el-table-column>
                             </el-table>
-                            <el-button slot="reference" type="text">{{scope.row.waterFeePaid}}</el-button>
+                            <el-button slot="reference" type="text"
+                                       @click="setPaidDetail(scope.row.chargeMainInfo.contractId,2)">
+                                {{formatFen2YuanText(scope.row.chargeMainInfo.paidWaterFee)}}
+                            </el-button>
                         </el-popover>
                     </template>
                 </el-table-column>
-                <el-table-column prop="waterFeeLeft" label="剩余应缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.restWaterFee" label="剩余应缴（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="电费" header-align="center">
-                <el-table-column prop="electricFeeNeed" label="已缴（元）" width="100">
+                <el-table-column prop="chargeMainInfo.paidElectricFee" label="已缴（元）" width="100">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.payDetail" style="overflow:scroll;height: 200px;">
-                                <el-table-column width="150" property="payDate" label="缴费时间"></el-table-column>
-                                <el-table-column width="150" property="fee" label="缴费金额"></el-table-column>
-                                <el-table-column width="150" property="dealMan" label="收费人"></el-table-column>
+                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;">
+                                <el-table-column width="150" property="paidTime" label="缴费时间"></el-table-column>
+                                <el-table-column width="150" property="paidFee" label="缴费金额"
+                                                 :formatter="formatFen2Yuan"></el-table-column>
+                                <el-table-column width="150" property="chargeMan" label="收费人"></el-table-column>
+                                <el-table-column label="操作">
+                                    <template slot-scope="scope">
+                                        <el-button type="text" size="mini" @click="printDetail(scope.$index, scope.row)"
+                                                   title="打印">打印收据
+                                        </el-button>
+                                    </template>
+                                </el-table-column>
                             </el-table>
-                            <el-button slot="reference" type="text">{{scope.row.electricFeeNeed}}</el-button>
+                            <el-button slot="reference" type="text"
+                                       @click="setPaidDetail(scope.row.chargeMainInfo.contractId,3)">
+                                {{formatFen2YuanText(scope.row.chargeMainInfo.paidElectricFee)}}
+                            </el-button>
                         </el-popover>
                     </template>
                 </el-table-column>
-                <el-table-column prop="electricFeePaid" label="已用（元）" width="100">
+                <el-table-column prop="chargeMainInfo.usedElectricFee" label="已用（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                 </el-table-column>
-                <el-table-column prop="electricFeeLeft" label="剩余（元）" width="100">
+                <el-table-column prop="chargeMainInfo.restElectricFee" label="剩余（元）" width="100"
+                                 :formatter="formatFen2Yuan">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="操作" fixed="right" width="80">
@@ -131,6 +193,8 @@
 
 <script>
     import ReceiveFee from "@/views/finance/components/ReceiveFee";
+    import {getFinanceListPage, getPaidDetailList} from "@/api/api";
+    import {digitUppercase} from "@/api/common";
 
     export default {
         name: "ReceivablesList",
@@ -140,71 +204,12 @@
         },
         data() {
             return {
-                dataList: [{
-                    merchantCode: '213123',
-                    company: '汽车止家',
-                    corporateBody: '李想',
-                    contractCode: 's232',
-                    rentFeeNeed: 25000,
-                    rentFeePaid: 5000,
-                    rentFeeLeft: 20000,
-                    propertyFeeNeed: 7000,
-                    propertyFeePaid: 5000,
-                    propertyFeeLeft: 2000,
-                    waterFeeNeed: 500,
-                    waterFeePaid: 0,
-                    waterFeeLeft: 500,
-                    electricFeeNeed: 230,
-                    electricFeePaid: 230,
-                    electricFeeLeft: 0,
-                    rentFeeDetail: [{
-                        feeDate: '2018-11-11',
-                        needFee: 10000,
-                        paidFee: 5000
-                    },
-                        {
-                            feeDate: '2019-11-11',
-                            needFee: 10000,
-                            paidFee: 0
-                        },
-                        {
-                            feeDate: '2020-11-11',
-                            needFee: 5000,
-                            paidFee: 0
-                        }
-                    ],
-                    payDetail:[{
-                        payDate:'2018-11-12 12:30',
-                        fee:500,
-                        dealMan:'zxy'
-                    },{
-                        payDate:'2018-11-12 12:30',
-                        fee:500,
-                        dealMan:'zxy'
-                    },{
-                        payDate:'2018-11-12 12:30',
-                        fee:500,
-                        dealMan:'zxy'
-                    },{
-                        payDate:'2018-11-12 12:30',
-                        fee:500,
-                        dealMan:'zxy'
-                    },{
-                        payDate:'2018-11-12 12:30',
-                        fee:500,
-                        dealMan:'zxy'
-                    },{
-                        payDate:'2018-11-12 12:30',
-                        fee:500,
-                        dealMan:'zxy'
-                    }
-
-                    ]
-                }],
+                dataList: [],
                 total: 0,
                 page: 1,
                 listLoading: false,
                 sels: [],//列表选中列
+                innerListLoading: false
             }
         },
         methods: {
@@ -216,12 +221,12 @@
                 };
                 this.listLoading = true;
                 console.log(para);
-                getHouseListPage(para).then((res) => {
+                getFinanceListPage(para).then((res) => {
                     let {msg, success} = res.data;
                     if (success) {
                         this.total = res.data.totalPages;
-                        this.houseList = res.data.data;
-                        console.log(res.data);
+                        this.dataList = res.data.data;
+                        console.log(this.dataList);
                         this.listLoading = false;
                     } else {
                         this.$message({
@@ -235,7 +240,7 @@
                 this.sels = sels;
             },
             handleReceive: function (index, row) {
-                this.$refs.receiveFeeRef.handleAdd(row);
+                this.$refs.receiveFeeRef.handleAdd(row.chargeMainInfo);
             },
             handleDel: function (index, row) {
                 //
@@ -264,11 +269,11 @@
                 this.page = val;
                 this.getList();
             },
-            formatRentFee: function (row) {
-                return row.rentFee / 100;
+            formatFen2Yuan: function (row, column, cellValue) {
+                return cellValue / 100;
             },
-            formatPropertyFee: function (row) {
-                return row.propertyFee / 100;
+            formatFen2YuanText: function (cellValue) {
+                return cellValue / 100;
             },
             showStatusText: function (row) {
                 switch (row.status) {
@@ -279,10 +284,57 @@
                     case 2:
                         return "已出租";
                 }
+            },
+            printDetail: function (index, row) {
+                console.log(row);
+                let routeData = this.$router.resolve({
+                    path: '/print', query: {
+                        company: row.company,
+                        chargeMan: row.chargeMan,
+                        remarks: row.remarks,
+                        paidMethod: row.paidMethod,
+                        paidTime: row.paidTime,
+                        paidFee: digitUppercase(this.formatFen2YuanText(row.paidFee))
+                    }
+                });
+                window.open(routeData.href, '_blank');
+            },
+            //获取列表数据
+            getPaidDetailList(contractId, type, paidObj) {
+                let para = {
+                    contractId: contractId,
+                    feeType: type,
+                };
+                this.innerListLoading = true;
+                console.log(para);
+                getPaidDetailList(para).then((res) => {
+                    let {msg, success} = res.data;
+                    if (success) {
+                        paidObj.paidDetail = res.data.data;
+                        paidObj.paidDetail.forEach(x => {
+                            x.company = paidObj.chargeMainInfo.company;
+                        });
+                        console.log(paidObj);
+                        this.innerListLoading = false;
+                    } else {
+                        this.$message({
+                            message: msg,
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            setPaidDetail: function (contractId, type) {
+                this.dataList.forEach(x => {
+                    if (x.chargeMainInfo.contractId == contractId) {
+                        x.paidDetail = null;
+                        this.getPaidDetailList(contractId, type, x);
+                    }
+                })
             }
         },
         mounted() {
-            // this.getList();
+            this.getList();
         }
     }
 </script>

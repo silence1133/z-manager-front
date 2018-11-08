@@ -1,10 +1,27 @@
 <template>
-    <section>财务报表</section>
+    <section>
+        <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-success="uploadSuccess"
+                >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+    </section>
 </template>
 
 <script>
     export default {
-        name: "report"
+        name: "report",
+        data(){
+
+        },
+        methods:{
+            uploadSuccess:function (response, file, fileList) {
+                alert(response);
+            }
+        }
     }
 </script>
 

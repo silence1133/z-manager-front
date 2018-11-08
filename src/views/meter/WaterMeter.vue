@@ -1,0 +1,77 @@
+<template>
+    <section>
+        <!--工具条-->
+        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+            <el-form :inline="true">
+                <el-form-item>
+                    <el-input v-model="filtersKeyword" placeholder="关键字"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="getList" icon="el-icon-search" size="medium">查询</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-upload
+                            class="upload-demo"
+                            action="/api/waterMeter/record/upload"
+                            :on-success="uploadSuccess" :on-error="uploadError" :before-upload="beforeUpload"
+                            name="excel" :show-file-list="false"
+                    >
+                        <el-button size="medium" type="primary" :loading="loading">导入用水Excel</el-button>
+                    </el-upload>
+                </el-form-item>
+            </el-form>
+        </el-col>
+
+        <water-meter-list></water-meter-list>
+    </section>
+</template>
+
+<script>
+    import WaterMeterList from "@/views/meter/WaterMeterList";
+
+    export default {
+        name: "WaterMeter",
+        components: {WaterMeterList},
+        data() {
+            return {
+                loading: false
+            }
+        },
+        methods: {
+            uploadSuccess: function (response, file, fileList) {
+                this.loading = false;
+                if (!response.success) {
+                    this.$message({
+                        message: response.msg,
+                        type: 'success'
+                    });
+                } else {
+                    this.$message({
+                        message: "上传数据成功！",
+                        type: 'success'
+                    });
+                }
+            },
+            uploadError: function (err, file, fileList) {
+                this.loading = false;
+                alert(err);
+            },
+            beforeUpload: function (file) {
+                this.loading = true;
+                let fileType = file.name.slice(file.name.lastIndexOf(".")+1,file.name.length);
+                console.log(fileType);
+                if(!(fileType.toLowerCase() === "xlsx") || (fileType.toLowerCase() === "xls")){
+                    this.$message({
+                        message: "请上传xls或者xlsx文件格式！",
+                        type: 'error'
+                    });
+                    return false;
+                }
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

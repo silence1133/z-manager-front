@@ -55,6 +55,14 @@ export const addWaterMeter = params => { return axios.post(`${base}/waterMeter/a
 export const addElectricMeter = params => { return axios.post(`${base}/electricMeter/add`,params).then(res => res.data); };
 
 
+
+
+export const getFinanceListPage = params => { return axios.get(`${base}/charge/list`, { params: params }); };
+export const getPaidDetailList = params => { return axios.get(`${base}/charge/log/list`, { params: params }); };
+export const addCharge = params => { return axios.post(`${base}/charge/add`, params).then(res => res.data); };
+
+
+
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
     console.log(response.data.code);

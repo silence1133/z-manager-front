@@ -17,16 +17,17 @@
 
 <script>
     import ReceivablesList from "@/views/finance/components/ReceivablesList";
+
     export default {
         name: "Finance",
         components: {ReceivablesList},
-        data(){
-            return{
-                filtersKeyWord:''
+        data() {
+            return {
+                filtersKeyWord: ''
             }
         },
-        methods:{
-            getList:function () {
+        methods: {
+            getList: function () {
                 this.$refs.receivablesListRef.getList();
             }
         }
