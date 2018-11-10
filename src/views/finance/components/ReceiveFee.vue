@@ -1,18 +1,31 @@
 <template>
-    <el-dialog title="缴费" :visible.sync="addFormVisible" :close-on-click-modal="false" width="30%">
+    <el-dialog title="缴费" :visible.sync="addFormVisible" :close-on-click-modal="false" width="40%">
         <el-form :model="addForm" label-width="110px" :rules="addFormRules" ref="addForm">
-            <el-form-item label="法人" prop="corporateBody">
-                <strong>{{addForm.coporateBody}}</strong>
-            </el-form-item>
-            <el-form-item label="公司名称" prop="company">
-                <strong>{{addForm.company}}</strong>
-            </el-form-item>
-            <el-form-item label="商户编号" prop="merchantCode">
-                <strong>{{addForm.merchantCode}}</strong>
-            </el-form-item>
-            <el-form-item label="合同编号" prop="contractCode">
-                <strong>{{addForm.contractCode}}</strong>
-            </el-form-item>
+
+            <el-row :gutter="2">
+                <el-col :span="8">
+                    <el-form-item label="商户编号" prop="merchantCode">
+                        <strong>{{addForm.merchantCode}}</strong>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                    <el-form-item label="合同编号" prop="contractCode">
+                        <strong>{{addForm.contractCode}}</strong>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row :gutter="2">
+                <el-col :span="8">
+                    <el-form-item label="法人" prop="corporateBody">
+                        <strong>{{addForm.coporateBody}}</strong>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="16">
+                    <el-form-item label="公司名称" prop="company">
+                        <strong>{{addForm.company}}</strong>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             <el-form-item label="缴费类型" prop="feeType">
                 <el-select v-model="addForm.feeType" placeholder="缴费类型">
                     <el-option
@@ -64,7 +77,7 @@
                     feeType: [
                         {required: true, message: '请选择缴费类型', trigger: 'blur'},
                     ],
-                    payWay: [
+                    paidMethod: [
                         {required: true, message: '请选择缴费方式', trigger: 'blur'},
                     ],
                     paidMan: [
@@ -88,7 +101,8 @@
             //显示新增界面
             handleAdd: function (rowData) {
                 this.addFormVisible = true;
-                this.addForm = rowData;
+                this.addForm = null;
+                this.addForm = Object.assign({}, rowData);
                 console.log(this.addForm);
             },
             addSubmit: function () {
@@ -97,16 +111,22 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let addParams = Object.assign({}, this.addForm);
+                            addParams.paidFee = addParams.paidFee * 100;
+                            console.log(addParams);
                             addCharge(addParams).then((res) => {
-                                console.log(res.data);
+                                console.log(res);
                                 this.addLoading = false;
-                                let {msg, success} = res.data;
+                                let {msg, success} = res;
                                 if (success) {
                                     this.$message({
                                         message: msg,
                                         type: 'success'
                                     });
-                                    this.$refs['addForm'].resetFields();
+
+                                    let payDetail = res.data;
+                                    payDetail.company = addParams.company;
+                                    this.printConfirm(payDetail);
+
                                     this.addFormVisible = false;
                                     this.$emit('getList');
                                 } else {
@@ -118,6 +138,24 @@
                             });
                         });
                     }
+                });
+            },
+            printConfirm: function (payDetail) {
+                this.$confirm('缴费成功，是否打印收据?', '提示', {
+                    confirmButtonText: '打印',
+                    cancelButtonText: '取消',
+                    type: 'info'
+                }).then(() => {
+                    // this.$message({
+                    //     type: 'success',
+                    //     message: '删除成功!'
+                    // });
+                    console.log(payDetail);
+                    this.$emit('getList');
+                    this.$emit('printDetail',null,payDetail);
+                }).catch(() => {
+                    console.log("dfads");
+                    this.$emit('getList');
                 });
             }
         }

@@ -75,7 +75,7 @@
 			</section>
 		</el-col>
 		<el-col :span="24" class="myfooter">
-			<div style="left:45%;position:absolute;top:10px;">&copy;&nbsp;silence&cnbo</div>
+			<div style="left:45%;position:absolute;top:10px;"><strong>&copy;&nbsp;silence&cnbo</strong></div>
 		</el-col>
 	</el-row>
 </template>
@@ -276,6 +276,7 @@
 			bottom: 0px;
 			height: 35px;
 			overflow: hidden;
+			padding: 0px;
 		}
 	}
 </style>

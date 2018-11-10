@@ -16,12 +16,12 @@
             <el-table-column prop="totalUseElectric" label="总用电（度）" width="120">
                 <template slot-scope="scope">
                     <el-popover trigger="click" placement="left">
-                        <el-table :data="scope.row.useElectricList" style="overflow:scroll;height: 200px;">
-                            <el-table-column width="150" property="date" label="抄表时间"></el-table-column>
+                        <el-table :data="scope.row.useElectricList" style="overflow:scroll;height: 200px;" v-loading="innerListLoading">
+                            <el-table-column width="150" property="createTime" label="抄表时间"></el-table-column>
                             <el-table-column width="150" property="startMark" label="起始刻度"></el-table-column>
                             <el-table-column width="150" property="endMark" label="截止刻度"></el-table-column>
                         </el-table>
-                        <el-button slot="reference" type="text">{{scope.row.totalUseElectric}}</el-button>
+                        <el-button slot="reference" type="text" @click="setUseDetail(scope.row.id)">{{scope.row.totalUseElectric}}</el-button>
                     </el-popover>
                 </template>
             </el-table-column>
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+    import {getElectricMeterListPage, getElectricMeterRecordList} from "@/api/api";
+
     export default {
         name: "ElectricMeterList",
         props: {
@@ -71,6 +73,7 @@
                 total: 0,
                 page: 1,
                 listLoading: false,
+                innerListLoading:false,
                 sels: [],//列表选中列
             }
         },
@@ -83,13 +86,38 @@
                 };
                 this.listLoading = true;
                 console.log(para);
-                getHouseListPage(para).then((res) => {
+                getElectricMeterListPage(para).then((res) => {
                     let {msg, success} = res.data;
                     if (success) {
                         this.total = res.data.totalPages;
-                        this.houseList = res.data.data;
+                        this.dataList = res.data.data;
                         console.log(res.data);
                         this.listLoading = false;
+                    } else {
+                        this.$message({
+                            message: msg,
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            setUseDetail(id){
+                let para = {
+                    electricMeterId: id
+                };
+                this.innerListLoading = true;
+                console.log(para);
+                getElectricMeterRecordList(para).then((res) => {
+                    let {msg, success} = res.data;
+                    if (success) {
+                        this.total = res.data.totalPages;
+                        this.dataList.forEach(x=>{
+                            if(x.id == id){
+                                x.useElectricList = res.data.data;
+                            }
+                        })
+                        console.log(this.dataList);
+                        this.innerListLoading = false;
                     } else {
                         this.$message({
                             message: msg,
@@ -134,11 +162,9 @@
             showStatusText: function (row) {
                 switch (row.status) {
                     case 0:
-                        return "不可出租";
+                        return "停止使用";
                     case 1:
-                        return "可出租";
-                    case 2:
-                        return "已出租";
+                        return "使用中";
                 }
             },
             formatFen2Yuan: function (row, column, cellValue) {
@@ -146,20 +172,7 @@
             },
         },
         mounted() {
-            this.dataList = [{
-                electricMeterCode: '21',
-                contractCode: 'ht111',
-                initMark: 2,
-                totalUseElectric: 5,
-                totalUseElectricFee: 2000,
-                useElectricList: [{
-                    date: '2018-10-30',
-                    startMark: 1,
-                    endMark: 3
-                }
-                ]
-            }]
-            // this.getList();
+            this.getList();
         }
     }
 </script>

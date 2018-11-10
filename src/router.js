@@ -40,7 +40,7 @@ let routes = [
         name: '系统管理',
         iconCls: 'fa fa-tasks',//图标样式class
         children: [
-            {path: '/main', component: Main, name: '主页', hidden: true},
+            {path: '/main', component: Main, name: '主页'},
             {path: '/zuser', component: ZUser, name: '账号管理'}
         ]
     },

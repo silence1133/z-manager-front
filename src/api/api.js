@@ -62,6 +62,14 @@ export const getPaidDetailList = params => { return axios.get(`${base}/charge/lo
 export const addCharge = params => { return axios.post(`${base}/charge/add`, params).then(res => res.data); };
 
 
+export const getWaterMeterListPage = params => { return axios.get(`${base}/waterMeter/manage/meter/list`, { params: params }); };
+export const getWaterMeterRecordList = params => { return axios.get(`${base}/waterMeter/manage/record/list`, { params: params }); };
+
+
+export const getElectricMeterListPage = params => { return axios.get(`${base}/electricMeter/manage/meter/list`, { params: params }); };
+export const getElectricMeterRecordList = params => { return axios.get(`${base}/electricMeter/manage/record/list`, { params: params }); };
+
+
 
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {

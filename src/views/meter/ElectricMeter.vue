@@ -22,7 +22,7 @@
             </el-form>
         </el-col>
 
-        <electric-meter-list></electric-meter-list>
+        <electric-meter-list ref="meterList" :filtersKeyword="filtersKeyword"></electric-meter-list>
     </section>
 </template>
 
@@ -34,10 +34,14 @@
         components: {ElectricMeterList},
         data() {
             return {
-                loading: false
+                loading: false,
+                filtersKeyword:''
             }
         },
         methods: {
+            getList: function () {
+                this.$refs.meterList.getList();
+            },
             uploadSuccess: function (response, file, fileList) {
                 this.loading = false;
                 if (!response.success) {

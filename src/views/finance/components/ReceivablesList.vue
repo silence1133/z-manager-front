@@ -47,7 +47,7 @@
                                  :formatter="formatFen2Yuan">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.houseFeeList" style="overflow:scroll;height: 200px;">
+                            <el-table :data="scope.row.houseFeeList" style="overflow:scroll;height: 200px;" v-loading="innerListLoading">
                                 <el-table-column width="150" property="payDeadline" label="应缴日期"></el-table-column>
                                 <el-table-column width="150" property="totalRentFee" label="应缴"
                                                  :formatter="formatFen2Yuan"></el-table-column>
@@ -69,7 +69,7 @@
                                  :formatter="formatFen2Yuan">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;">
+                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;" v-loading="innerListLoading">
                                 <el-table-column width="150" property="paidTime" label="缴费时间"></el-table-column>
                                 <el-table-column width="150" property="paidFee" label="缴费金额"
                                                  :formatter="formatFen2Yuan"></el-table-column>
@@ -93,7 +93,7 @@
                                  :formatter="formatFen2Yuan">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.houseFeeList">
+                            <el-table :data="scope.row.houseFeeList" style="overflow:scroll;height: 200px;" v-loading="innerListLoading">
                                 <el-table-column width="150" property="payDeadline" label="应缴日期"></el-table-column>
                                 <el-table-column width="150" property="totalPropertyFee" label="应缴"
                                                  :formatter="formatFen2Yuan"></el-table-column>
@@ -114,7 +114,7 @@
                 <el-table-column prop="chargeMainInfo.paidWaterFee" label="已缴（元）" width="100">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;">
+                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;" v-loading="innerListLoading">
                                 <el-table-column width="150" property="paidTime" label="缴费时间"></el-table-column>
                                 <el-table-column width="150" property="paidFee" label="缴费金额"
                                                  :formatter="formatFen2Yuan"></el-table-column>
@@ -142,7 +142,7 @@
                 <el-table-column prop="chargeMainInfo.paidElectricFee" label="已缴（元）" width="100">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
-                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;">
+                            <el-table :data="scope.row.paidDetail" style="overflow:scroll;height: 200px;" v-loading="innerListLoading">
                                 <el-table-column width="150" property="paidTime" label="缴费时间"></el-table-column>
                                 <el-table-column width="150" property="paidFee" label="缴费金额"
                                                  :formatter="formatFen2Yuan"></el-table-column>
@@ -187,7 +187,7 @@
         </el-col>
 
 
-        <receive-fee ref="receiveFeeRef"></receive-fee>
+        <receive-fee ref="receiveFeeRef" @printDetail="printDetail"></receive-fee>
     </div>
 </template>
 

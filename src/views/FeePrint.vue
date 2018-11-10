@@ -46,13 +46,26 @@
                 <td>&nbsp;&nbsp;&nbsp; {{$route.query.chargeMan}}</td>
             </tr>
         </div>
+        <div v-if="showPrint" style="position:absolute; right: 200px;">
+            <el-button type="mini" @click.native=" print()">打印</el-button>
+        </div>
     </div>
 
 </template>
 
 <script>
     export default {
-        name: "FeePrint"
+        name: "FeePrint",
+        data() {
+            return{
+                showPrint:true
+            }
+        },
+        methods:{
+            print:function () {
+                window.print();
+            }
+        }
     }
 </script>
 
