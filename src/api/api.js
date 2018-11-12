@@ -70,6 +70,14 @@ export const getElectricMeterListPage = params => { return axios.get(`${base}/el
 export const getElectricMeterRecordList = params => { return axios.get(`${base}/electricMeter/manage/record/list`, { params: params }); };
 
 
+export const getMaterialListPage = params => { return axios.get(`${base}/material/list`, { params: params }); };
+export const addMaterial = params => { return axios.post(`${base}/material/add`, params).then(res => res.data); };
+export const materialInstock = params => { return axios.post(`${base}/stock/in`, params).then(res => res.data); };
+export const materialOutstock = params => { return axios.post(`${base}/stock/out`, params).then(res => res.data); };
+export const getInstockList = params => { return axios.get(`${base}/stock/list/material/in`, { params: params }); };
+export const getOutstockList = params => { return axios.get(`${base}/stock/list/material/out`, { params: params }); };
+
+
 
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {

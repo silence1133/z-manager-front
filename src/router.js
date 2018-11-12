@@ -71,10 +71,10 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '资产 管理',
+        name: '资产管理',
         iconCls: 'fa fa-industry',//图标样式class
         children: [
-            {path: '/material', component: Material, name: '设备列表'}
+            {path: '/material', component: Material, name: '资产列表'}
             // {path: '/zuser', component: ZUser, name: '设备出入库列表'}
         ]
     },
