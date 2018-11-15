@@ -1,6 +1,6 @@
 <template>
     <!--新增界面-->
-    <el-dialog title="新增商铺" :visible.sync="addFormVisible" :close-on-click-modal="false" width="30%">
+    <el-dialog title="新增资产" :visible.sync="addFormVisible" :close-on-click-modal="false" width="30%">
         <el-form :model="addForm" label-width="110px" :rules="addFormRules" ref="addForm">
             <el-form-item label="资产类型" prop="houseCode">
                 <el-input v-model="addForm.type"></el-input>

@@ -31,7 +31,8 @@
             return {
                 addFormVisible: false,//新增界面是否显示
                 addLoading: false,
-                addFormRules: {}
+                addFormRules: {},
+                addForm:{}
             }
         },
         methods: {

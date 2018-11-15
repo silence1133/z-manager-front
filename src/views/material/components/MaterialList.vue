@@ -33,7 +33,8 @@
             </el-table-column>
             <el-table-column prop="modifyEmp" label="修改人">
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="120">
+
+            <el-table-column label="出入库" fixed="right" width="120">
                 <template slot-scope="scope">
                     <el-button type="text" size="small" @click="inStock(scope.$index, scope.row)">入库</el-button>
                     <el-button type="text" size="small" @click="outStock(scope.$index, scope.row)">出库</el-button>
@@ -63,6 +64,13 @@
                     </el-popover>
                 </template>
             </el-table-column>
+
+            <el-table-column label="操作" fixed="right" width="120">
+                <template slot-scope="scope">
+                    <el-button type="warning" size="small" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
+                    <el-button type="danger" size="small"  icon="el-icon-delete" circle @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>
+                </template>
+            </el-table-column>
         </el-table>
 
         <!--工具条-->
@@ -75,6 +83,8 @@
 
         <material-instock ref="instockRef" @getList="getList"></material-instock>
         <material-outstock ref="outstockRef" @getList="getList"></material-outstock>
+
+        <material-edit ref="materialEditRef" @getList="getList"></material-edit>
     </div>
 </template>
 
@@ -82,10 +92,11 @@
     import {getInstockList, getMaterialListPage, getOutstockList} from "@/api/api";
     import MaterialInstock from "@/views/material/components/MaterialInstock";
     import MaterialOutstock from "@/views/material/components/MaterialOutstock";
+    import MaterialEdit from "@/views/material/components/MaterialEdit";
 
     export default {
         name: "MaterialList",
-        components: {MaterialOutstock, MaterialInstock},
+        components: {MaterialEdit, MaterialOutstock, MaterialInstock},
         props: {
             filtersKeyword: String
         },
@@ -127,7 +138,7 @@
                 this.sels = sels;
             },
             handleEdit: function (index, row) {
-
+                this.$refs.materialEditRef.handleEdit(row);
             },
             handleDel: function (index, row) {
                 //

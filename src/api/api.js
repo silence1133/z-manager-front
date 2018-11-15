@@ -76,6 +76,7 @@ export const materialInstock = params => { return axios.post(`${base}/stock/in`,
 export const materialOutstock = params => { return axios.post(`${base}/stock/out`, params).then(res => res.data); };
 export const getInstockList = params => { return axios.get(`${base}/stock/list/material/in`, { params: params }); };
 export const getOutstockList = params => { return axios.get(`${base}/stock/list/material/out`, { params: params }); };
+export const editMaterial = params => { return axios.post(`${base}/material/update`, params).then(res => res.data); };
 
 
 
