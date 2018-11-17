@@ -33,6 +33,19 @@ router.beforeEach((to, from, next) => {
 
 export const toLogin = ()  => {router.push("/login")};
 
+let user = JSON.parse(sessionStorage.getItem('user'));
+if(user && user.roleType == 2){
+    routes.forEach(x => {
+        if(x.children){
+            x.children.forEach( y => {
+                if(y.path == '/zuser'){
+                    console.log(y);
+                    y.hidden = true;
+                }
+            })
+        }
+    })
+}
 
 new Vue({
     router,

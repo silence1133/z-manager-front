@@ -1,6 +1,6 @@
 <template>
     <!--新增界面-->
-    <el-dialog title="新增账号" :visible.sync="addFormVisible" :close-on-click-modal="false" width="40%">
+    <el-dialog title="新增账号" :visible.sync="addFormVisible" :close-on-click-modal="false" width="33%">
         <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
             <el-form-item label="姓名" prop="name">
                 <el-input v-model="addForm.name" :maxlength="maxlength"></el-input>
@@ -16,10 +16,10 @@
             </el-form-item>
             <el-form-item label="角色" prop="roleType">
                 <el-radio-group v-model="addForm.roleType">
-                    <el-radio class="radio" label="1">老板</el-radio>
-                    <el-radio class="radio" label="2">主管</el-radio>
-                    <el-radio class="radio" label="3">普通职员</el-radio>
-                    <el-radio class="radio" label="4">助理</el-radio>
+                    <el-radio class="radio" label="1">管理员</el-radio>
+                    <el-radio class="radio" label="2">普通职员</el-radio>
+                    <!--<el-radio class="radio" label="3">普通职员</el-radio>-->
+                    <!--<el-radio class="radio" label="4">助理</el-radio>-->
                 </el-radio-group>
             </el-form-item>
         </el-form>
@@ -32,8 +32,6 @@
 
 <script>
 
-    import util from '../../../common/js/util'
-    //import NProgress from 'nprogress'
     import {addUser} from '../../../api/api';
 
     export default {
@@ -75,7 +73,7 @@
                     account: '',
                     password: '',
                     checkPasswd: '',
-                    roleType: ''
+                    roleType: null
                 },
                 maxlength: 10
             }

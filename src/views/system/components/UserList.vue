@@ -11,7 +11,7 @@
             </el-table-column>
             <el-table-column prop="account" label="账号">
             </el-table-column>
-            <el-table-column prop="roleType" label="角色类型">
+            <el-table-column prop="roleType" label="角色类型" :formatter="showRoleTypeText">
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间">
             </el-table-column>
@@ -111,6 +111,12 @@
             handleCurrentChange: function (val) {
                 this.page = val;
                 this.getUsers();
+            },
+            showRoleTypeText:function (row) {
+                switch (row.roleType) {
+                    case 1:return "管理员";
+                    case 2:return "普通职员";
+                }
             }
         },
         mounted() {
