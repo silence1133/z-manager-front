@@ -16,7 +16,10 @@
                             :on-success="uploadSuccess" :on-error="uploadError" :before-upload="beforeUpload"
                             name="excel" :show-file-list="false"
                     >
-                        <el-button size="medium" type="primary" :loading="loading">导入用电Excel</el-button>
+                        <el-tooltip placement="bottom" >
+                            <div slot="content">1、上传前请严格检查数据是否正确，导入后数据将无法回退！<br/>2、文件大小不能超过2m</div>
+                            <el-button size="medium" type="primary" :loading="loading">导入用电Excel</el-button>
+                        </el-tooltip>
                     </el-upload>
                 </el-form-item>
             </el-form>
@@ -35,7 +38,7 @@
         data() {
             return {
                 loading: false,
-                filtersKeyword:''
+                filtersKeyword: ''
             }
         },
         methods: {
@@ -61,14 +64,23 @@
                 alert(err);
             },
             beforeUpload: function (file) {
+
                 this.loading = true;
-                let fileType = file.name.slice(file.name.lastIndexOf(".")+1,file.name.length);
+                let fileType = file.name.slice(file.name.lastIndexOf(".") + 1, file.name.length);
                 console.log(fileType);
-                if(!(fileType.toLowerCase() === "xlsx") || (fileType.toLowerCase() === "xls")){
+                if (!(fileType.toLowerCase() === "xlsx") || (fileType.toLowerCase() === "xls")) {
                     this.$message({
                         message: "请上传xls或者xlsx文件格式！",
                         type: 'error'
                     });
+                    return false;
+                }
+                if (file.size > 2 * 1024 * 1024) {
+                    this.$message({
+                        message: "文件大小不允许超过2兆！",
+                        type: 'error'
+                    });
+                    this.loading = false;
                     return false;
                 }
             }

@@ -46,9 +46,6 @@
                 <td>&nbsp;&nbsp;&nbsp; {{$route.query.chargeMan}}</td>
             </tr>
         </div>
-        <div v-if="showPrint" style="position:absolute; right: 200px;">
-            <el-button type="mini" @click.native=" print()">打印</el-button>
-        </div>
     </div>
 
 </template>
@@ -65,6 +62,9 @@
             print:function () {
                 window.print();
             }
+        },
+        mounted() {
+            window.print();
         }
     }
 </script>

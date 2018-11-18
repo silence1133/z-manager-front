@@ -23,14 +23,14 @@
                 v-if="inputVisible"
                 v-model="inputRentFee"
                 size="small"
-                style="width: 140px;" placeholder="输入租金"
+                style="width: 200px;" placeholder="输入租金（元/平/月）"
         >
         </el-input>
         <el-input
                 v-if="inputVisible"
                 v-model="inputPropertyFee"
                 size="small"
-                style="width: 140px;" placeholder="输入物业费"
+                style="width: 200px;" placeholder="输入物业费（元/平/月）"
         >
         </el-input>&nbsp;&nbsp;
         <el-button v-if="inputVisible" type="success" icon="el-icon-check" round @click="handleInputConfirm"
@@ -123,7 +123,10 @@
                 };
             },
             handleSelect(item) {
+                console.log(item);
                 this.inputHouseId = item.id;
+                this.inputRentFee = item.rentFee/100;
+                this.inputPropertyFee = item.propertyFee/100;
             }
         },
         mounted() {

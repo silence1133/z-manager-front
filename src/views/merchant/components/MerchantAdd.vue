@@ -96,7 +96,6 @@
             //显示新增界面
             handleAdd: function () {
                 this.addFormVisible = true;
-                this.$refs['addForm'].resetFields();
                 this.addForm = {
                     merchantCode: '',
                     company: '',

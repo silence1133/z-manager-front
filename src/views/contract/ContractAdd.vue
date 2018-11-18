@@ -15,25 +15,27 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-
-            <el-row :gutter="2">
-                <el-col :span="8">
-                    <el-form-item label="经营业务" prop="contract.business">
-                        <el-input v-model="addForm.contract.business"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="16">
-                    <el-form-item label="合同时间" prop="contract.contractDateRange">
-                        <el-date-picker
-                                v-model="addForm.contract.contractDateRange"
-                                type="daterange"
-                                range-separator="至"
-                                start-placeholder="开始日期"
-                                end-placeholder="结束日期" value-format="yyyy-MM-dd HH:mm:ss">
-                        </el-date-picker>
-                    </el-form-item>
-                </el-col>
-            </el-row>
+            <el-form-item label="经营业务" prop="contract.business">
+                <el-input v-model="addForm.contract.business" maxlength="200" type="textarea" rows="3"></el-input>
+            </el-form-item>
+            <!--<el-row :gutter="2">-->
+                <!--<el-col :span="8">-->
+                    <!--<el-form-item label="经营业务" prop="contract.business">-->
+                        <!--<el-input v-model="addForm.contract.business"></el-input>-->
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+                <!--<el-col :span="16">-->
+                    <!--<el-form-item label="合同时间" prop="contract.contractDateRange">-->
+                        <!--<el-date-picker-->
+                                <!--v-model="addForm.contract.contractDateRange"-->
+                                <!--type="daterange"-->
+                                <!--range-separator="至"-->
+                                <!--start-placeholder="开始日期"-->
+                                <!--end-placeholder="结束日期" value-format="yyyy-MM-dd HH:mm:ss">-->
+                        <!--</el-date-picker>-->
+                    <!--</el-form-item>-->
+                <!--</el-col>-->
+            <!--</el-row>-->
 
             <el-row :gutter="6">
                 <el-col :span="8">
@@ -78,7 +80,7 @@
             </el-row>
 
             <el-form-item label="备注" prop="contract.remarks">
-                <el-input v-model="addForm.contract.remarks" maxlength="20" type="textarea" rows="3"></el-input>
+                <el-input v-model="addForm.contract.remarks" maxlength="200" type="textarea" rows="3"></el-input>
             </el-form-item>
             <div style="border:1px dashed darkgray;padding: 30px;">
                 <el-form-item label="选择商铺" prop="houseList">
@@ -88,6 +90,18 @@
                     <el-input-number v-model.number="addForm.contract.rentYear" @change="showPayPercent" :min="1"
                                      :max="10"></el-input-number>
                 </el-form-item>
+                <el-row :gutter="6">
+                    <el-col :span="8">
+                        <el-form-item label="合同时间范围" prop="contract.contractTime">
+                            <el-date-picker type="date" placeholder="选择开始日期" v-model="addForm.contract.startDate"
+                                            value-format="yyyy-MM-dd HH:mm:ss" @change="setContractEndDate"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">至
+                            <el-date-picker type="date" placeholder="合同截止日期" v-model="addForm.contract.endDate"
+                                            value-format="yyyy-MM-dd HH:mm:ss"  :disabled="true"></el-date-picker>
+                    </el-col>
+                </el-row>
                 <el-form-item label="租金缴纳月数分配" prop="rentMonth">
                     <el-input style="width: 140px;" v-for="(text,index) in placeholderTextList" :key="index"
                               :placeholder="text" v-model.number="addForm.rentMonthList[index]"></el-input>
@@ -109,6 +123,7 @@
 <script>
     import {addContract} from "@/api/api";
     import HouseChoose from "@/views/contract/components/HouseChoose";
+    import {dateFormat} from "@/api/common";
 
     export default {
         name: "ContractAdd",
@@ -173,14 +188,13 @@
                 for (let i = 0; i < value; i++) {
                     this.placeholderTextList.push(`第${i + 1}年缴纳月数`);
                 }
+                this.setContractEndDate();
             },
             addSubmit: function () {
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
-                            this.addForm.contract.startDate = this.addForm.contract.contractDateRange[0];
-                            this.addForm.contract.endDate = this.addForm.contract.contractDateRange[1];
                             let addParams = Object.assign({}, this.addForm);
 
                             this.addForm.contract.cashBledge =  this.addForm.contract.cashBledge*100;
@@ -197,7 +211,6 @@
                                         message: msg,
                                         type: 'success'
                                     });
-                                    this.$refs['addForm'].resetFields();
                                     this.goBack();
                                 } else {
                                     this.$message({
@@ -222,6 +235,16 @@
                 })
                 this.addForm.houseList = houseList;
                 console.log(this.addForm.houseList);
+            },
+            setContractEndDate(){
+                // alert(this.addForm.contract.startDate);
+                if(this.addForm.contract.rentYear && this.addForm.contract.startDate){
+                    let start=new Date(this.addForm.contract.startDate);
+                    let end=new Date(this.addForm.contract.startDate);
+                    end.setFullYear(start.getFullYear()+this.addForm.contract.rentYear);
+                    this.addForm.contract.endDate =  dateFormat(end,"yyyy-MM-dd hh:mm:ss");
+                    console.log(this.addForm.contract.endDate);
+                }
             }
         }
     }

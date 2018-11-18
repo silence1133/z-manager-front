@@ -13,9 +13,9 @@
             </el-table-column>
             <el-table-column prop="contract.cashBledge" label="履约保证金（元）" :formatter="formatFen2Yuan">
             </el-table-column>
-            <el-table-column prop="contract.startDate" label="起始日期" width="100">
-            </el-table-column>
-            <el-table-column prop="contract.endDate" label="终止日期" width="100">
+            <!--<el-table-column prop="contract.startDate" label="起始日期" width="100">-->
+            <!--</el-table-column>-->
+            <el-table-column prop="contract.endDate" label="签约时间范围" width="200" :formatter="formatDateRange">
             </el-table-column>
             <el-table-column label="备注">
                 <template slot-scope="scope">
@@ -31,23 +31,48 @@
             </el-table-column>
             <el-table-column prop="contract.waterFee" label="水费单价（元/度）" :formatter="formatFen2Yuan">
             </el-table-column>
-            <el-table-column prop="contract.contractTime" label="合同签订时间" width="120">
+            <el-table-column prop="contract.contractTime" label="合同签订时间" width="120" :formatter="formatDate">
             </el-table-column>
             <el-table-column prop="contract.rentYear" label="租用年限" width="120">
             </el-table-column>
-            <el-table-column prop="contract.status" label="状态" :formatter="showStatusText">
+            <el-table-column prop="contract.status" label="状态" :formatter="showStatusText" >
             </el-table-column>
             <el-table-column label="租用商铺信息" width="120">
                 <template slot-scope="scope">
                     <el-popover trigger="click" placement="left">
                         <el-table :data="scope.row.houseList">
                             <el-table-column width="150" property="houseCode" label="商铺编号"></el-table-column>
+                            <el-table-column width="150" property="area" label="商铺面积"></el-table-column>
                             <el-table-column width="150" property="rentFee" label="租金(元/平/月)"
                                              :formatter="formatFen2Yuan"></el-table-column>
                             <el-table-column width="150" property="propertyFee" label="物业费(元/平/月)"
                                              :formatter="formatFen2Yuan"></el-table-column>
                         </el-table>
-                        <el-button slot="reference" size="small" type="info">查看商铺详情</el-button>
+                        <el-button slot="reference" size="mini" type="primary" plain>查看商铺</el-button>
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <el-table-column label="电表" width="70">
+                <template slot-scope="scope">
+                    <el-popover trigger="click" placement="left">
+                        <el-table :data="scope.row.electricMeterList">
+                            <el-table-column width="150" property="electricMeterCode" label="商铺编号"></el-table-column>
+                            <el-table-column width="150" property="initMark" label="初使刻度"></el-table-column>
+                            <el-table-column width="150" property="totalUseElectric" label="总用电（度）"></el-table-column>
+                        </el-table>
+                        <el-button slot="reference" size="mini" type="primary" plain>查看</el-button>
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <el-table-column label="水表" width="70">
+                <template slot-scope="scope">
+                    <el-popover trigger="click" placement="left">
+                        <el-table :data="scope.row.waterMeterList">
+                            <el-table-column width="150" property="waterMeterCode" label="商铺编号"></el-table-column>
+                            <el-table-column width="150" property="initMark" label="初使刻度"></el-table-column>
+                            <el-table-column width="150" property="totalWater" label="总用水（吨）"></el-table-column>
+                        </el-table>
+                        <el-button slot="reference" size="mini" type="primary" plain>查看</el-button>
                     </el-popover>
                 </template>
             </el-table-column>
@@ -67,14 +92,13 @@
 
         <!--工具条-->
         <el-col :span="24" class="toolbar">
-            <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
             <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20"
                            :page-count="total" style="float:right;">
             </el-pagination>
         </el-col>
 
-        <water-meter-add ref="waterMeterAddRef"></water-meter-add>
-        <electric-meter-add ref="electricMeterAddRef"></electric-meter-add>
+        <water-meter-add ref="waterMeterAddRef" @getList="getList"></water-meter-add>
+        <electric-meter-add ref="electricMeterAddRef" @getList="getList"></electric-meter-add>
     </div>
 </template>
 
@@ -83,6 +107,7 @@
     import {getContractListPage} from "@/api/api";
     import WaterMeterAdd from "@/views/contract/components/WaterMeterAdd";
     import ElectricMeterAdd from "@/views/contract/components/ElectricMeterAdd";
+    import {dateFormat} from "@/api/common";
 
     export default {
         name: "ContractList",
@@ -145,9 +170,11 @@
             showStatusText: function (row) {
                 switch (row.contract.status) {
                     case 0:
-                        return "未签约";
+                        return "无效";
                     case 1:
-                        return "已签约";
+                        return "签约中";
+                    case 2:
+                        return "合同终止";
                 }
             },
             formatFen2Yuan: function (row, column, cellValue) {
@@ -158,6 +185,12 @@
             },
             addElectricMeter: function (index, row) {
                 this.$refs.electricMeterAddRef.handleAdd(row.contract.id);
+            },
+            formatDate: function (row, column, cellValue) {
+                return dateFormat(new Date(cellValue),"yyyy-MM-dd");
+            },
+            formatDateRange: function (row, column, cellValue) {
+                return dateFormat(new Date(row.contract.startDate),"yyyy-MM-dd")+" ～ "+dateFormat(new Date(cellValue),"yyyy-MM-dd");
             }
         },
         mounted() {

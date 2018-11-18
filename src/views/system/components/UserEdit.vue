@@ -1,6 +1,6 @@
 <template>
     <!--编辑界面-->
-    <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
+    <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false" width="33%">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="原密码" prop="oldPasswd">
                 <el-input v-model="editForm.oldPasswd" type="password"></el-input>

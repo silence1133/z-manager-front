@@ -180,14 +180,13 @@
 
         <!--工具条-->
         <el-col :span="24" class="toolbar">
-            <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
             <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange"
                            :page-count="total" style="float:right;">
             </el-pagination>
         </el-col>
 
 
-        <receive-fee ref="receiveFeeRef" @printDetail="printDetail"></receive-fee>
+        <receive-fee ref="receiveFeeRef" @printDetail="printDetail" @getList="getList"></receive-fee>
     </div>
 </template>
 

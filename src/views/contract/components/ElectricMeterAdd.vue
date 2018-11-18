@@ -29,6 +29,7 @@
 
 <script>
     import {addElectricMeter} from "@/api/api";
+    import {isNumber} from "@/api/common";
 
     export default {
         name: "ElectricMeterAdd",
@@ -75,6 +76,13 @@
             addSubmit: function () {
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
+                        if(isNumber(this.addForm.electricMeterCode)){
+                            this.$message({
+                                message: "编号不要使用数字",
+                                type: 'error'
+                            });
+                            return;
+                        }
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let addParams = Object.assign({}, this.addForm);

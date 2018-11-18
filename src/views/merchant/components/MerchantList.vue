@@ -39,17 +39,16 @@
             </el-table-column>
             <el-table-column prop="modifyEmp" label="修改人">
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="120">
+            <el-table-column label="操作" fixed="right" width="70">
                 <template slot-scope="scope">
-                    <el-button type="warning" size="small" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
-                    <el-button type="danger" size="small"  icon="el-icon-delete" circle @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>
+                    <!--<el-button type="warning" size="small" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>-->
+                    <el-button type="danger" size="small"  icon="el-icon-delete" circle @click="handleDel(scope.$index, scope.row)" title="作废商户资料"></el-button>
                 </template>
             </el-table-column>
         </el-table>
 
         <!--工具条-->
         <el-col :span="24" class="toolbar">
-            <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
             <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange"
                            :page-count="total" style="float:right;">
             </el-pagination>
@@ -106,18 +105,31 @@
 
             },
             handleDel: function (index, row) {
-
-                this.$confirm('确认要删除吗？', '提示', {}).then(() => {
-                    removeMerchant(row.id).then((data)=>{
-                        if(data.success){
+                if(row.status == 0){
+                    this.$message({
+                        message: "资料已经作废，无需再操作！",
+                        type: 'error'
+                    });
+                    return;
+                }
+                this.$confirm('确认要作废商户资料吗？', '提示', {}).then(() => {
+                    let params = {
+                        id:row.id,
+                        status:0
+                    };
+                    removeMerchant(params).then((res)=>{
+                        console.log(res);
+                        this.addLoading = false;
+                        let {msg, success} = res;
+                        if (success) {
                             this.$message({
-                                message: data.msg,
+                                message: msg,
                                 type: 'success'
                             });
-                            this.getUsers();
-                        }else{
+                            this.getList();
+                        } else {
                             this.$message({
-                                message: data.msg,
+                                message: msg,
                                 type: 'error'
                             });
                         }
@@ -133,8 +145,8 @@
             },
             showStatusText:function (row) {
                 switch (row.status) {
-                    case 0:return "未签约";
-                    case 1:return "已签约";
+                    case 0:return "作废";
+                    case 1:return "可用";
                 }
             }
         },

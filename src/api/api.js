@@ -28,6 +28,8 @@ export const addHouse = params => { return axios.post(`${base}/house/add`,params
 
 export const loadHouseList = () => { return axios.get(`${base}/house/list/available`).then(res => res.data); };
 
+export const editHouse = params => { return axios.post(`${base}/house/update/status`,params).then(res => res.data); };
+
 
 /**
  * 商户相关
@@ -38,8 +40,9 @@ export const getMerchantListPage = params => { return axios.get(`${base}/merchan
 
 export const addMerchant = params => { return axios.post(`${base}/merchant/add`,params).then(res => res.data); };
 
-export const removeMerchant = params => { return axios.post(`${base}/merchant/delete/`+params).then(res => res.data); };
+// export const removeMerchant = params => { return axios.post(`${base}/merchant/delete/`+params).then(res => res.data); };
 
+export const removeMerchant = params => { return axios.post(`${base}/merchant/update/status`,params).then(res => res.data); };
 
 /**
  * 合同相关

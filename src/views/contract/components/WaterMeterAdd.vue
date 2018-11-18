@@ -20,6 +20,7 @@
 
 <script>
     import {addWaterMeter} from "@/api/api";
+    import {isNumber} from "@/api/common";
 
     export default {
         name: "WaterMeterAdd",
@@ -60,6 +61,13 @@
             addSubmit:function () {
                 this.$refs.addForm.validate((valid) => {
                     if (valid) {
+                        if(isNumber(this.addForm.waterMeterCode)){
+                            this.$message({
+                                message: "编号不要使用数字",
+                                type: 'error'
+                            });
+                            return;
+                        }
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let addParams = Object.assign({}, this.addForm);

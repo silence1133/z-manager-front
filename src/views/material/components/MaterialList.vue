@@ -65,17 +65,16 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="操作" fixed="right" width="120">
+            <el-table-column label="操作" fixed="right" width="70">
                 <template slot-scope="scope">
                     <el-button type="warning" size="small" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
-                    <el-button type="danger" size="small"  icon="el-icon-delete" circle @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>
+                    <!--<el-button type="danger" size="small"  icon="el-icon-delete" circle @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>-->
                 </template>
             </el-table-column>
         </el-table>
 
         <!--工具条-->
         <el-col :span="24" class="toolbar">
-            <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
             <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange"
                            :page-count="total" style="float:right;">
             </el-pagination>
