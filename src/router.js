@@ -64,8 +64,8 @@ let routes = [
         name: '财务管理',
         iconCls: 'fa fa-university',//图标样式class
         children: [
-            {path: '/finance', component: Finance, name: '收费管理'}
-            // {path: '/report', component: Report, name: '财务报表'}
+            {path: '/finance', component: Finance, name: '收费管理'},
+            {path: '/report', component: Report, name: '财务报表'}
         ]
     },
     {

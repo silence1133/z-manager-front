@@ -7,37 +7,25 @@
             </el-table-column>
             <el-table-column type="index">
             </el-table-column>
-            <el-table-column prop="electricMeterCode" label="电表编号" width="100">
+            <el-table-column prop="electricMeterCode" label="合同编号" width="100">
             </el-table-column>
-            <el-table-column prop="contractCode" label="归属合同编号" width="120">
+            <el-table-column prop="contractCode" label="法人" width="120">
             </el-table-column>
-            <el-table-column prop="initMark" label="初始刻度" width="120">
+            <el-table-column prop="contractCode" label="公司名称" width="120">
             </el-table-column>
-            <el-table-column prop="totalUseElectric" label="总用电（度）" width="120">
-                <template slot-scope="scope">
-                    <el-popover trigger="click" placement="left">
-                        <el-table :data="scope.row.useElectricList" style="overflow:scroll;height: 200px;" v-loading="innerListLoading">
-                            <el-table-column width="150" property="createTime" label="抄表时间"></el-table-column>
-                            <el-table-column width="150" property="startMark" label="起始刻度"></el-table-column>
-                            <el-table-column width="150" property="endMark" label="截止刻度"></el-table-column>
-                        </el-table>
-                        <el-button slot="reference" type="text" @click="setUseDetail(scope.row.id)">{{scope.row.totalUseElectric}}</el-button>
-                    </el-popover>
-                </template>
+            <el-table-column prop="initMark" label="缴费人" width="120">
             </el-table-column>
-            <el-table-column prop="totalUseElectricFee" label="总电费" :formatter="formatFen2Yuan" width="120">
+            <el-table-column prop="initMark" label="收据号" width="120">
             </el-table-column>
-            <el-table-column label="备注">
-                <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top">
-                        <p>备注: {{ scope.row.remarks }}</p>
-                        <div slot="reference" class="name-wrapper">
-                            <el-tag size="medium">查看备注</el-tag>
-                        </div>
-                    </el-popover>
-                </template>
+            <el-table-column prop="status" label="缴费金额">
             </el-table-column>
-            <el-table-column prop="status" label="状态" :formatter="showStatusText">
+            <el-table-column prop="status" label="缴费类型" :formatter="showStatusText">
+            </el-table-column>
+            <el-table-column prop="status" label="缴费时间" :formatter="showStatusText">
+            </el-table-column>
+            <el-table-column prop="status" label="收费人" :formatter="showStatusText">
+            </el-table-column>
+            <el-table-column prop="status" label="缴费事由" :formatter="showStatusText">
             </el-table-column>
         </el-table>
 
@@ -54,7 +42,7 @@
     import {getElectricMeterListPage, getElectricMeterRecordList} from "@/api/api";
 
     export default {
-        name: "ElectricMeterList",
+        name: "ReportList",
         props: {
             filtersKeyword: String
         },
@@ -77,7 +65,7 @@
                 };
                 this.listLoading = true;
                 console.log(para);
-                getElectricMeterListPage(para).then((res) => {
+                getReportListPage(para).then((res) => {
                     let {msg, success} = res.data;
                     if (success) {
                         this.total = res.data.totalPages;
@@ -163,7 +151,7 @@
             },
         },
         mounted() {
-            this.getList();
+            // this.getList();
         }
     }
 </script>

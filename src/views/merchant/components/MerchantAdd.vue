@@ -10,7 +10,7 @@
                 </el-col>
                 <el-col :span="16">
                     <el-form-item label="身份证（营业执照号码）" prop="idCard" label-width="180px">
-                        <el-input v-model.number="addForm.idCard" ></el-input>
+                        <el-input v-model="addForm.idCard" ></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -18,7 +18,7 @@
             <el-row :gutter="2">
                 <el-col :span="10">
                     <el-form-item label="法人" prop="corporateBody">
-                        <el-input v-model.number="addForm.corporateBody"  ></el-input>
+                        <el-input v-model="addForm.corporateBody"  ></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="14">
