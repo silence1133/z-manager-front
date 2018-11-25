@@ -54,7 +54,9 @@
         props: {
             filtersKeyword: String,
             filtersStartDate: String,
-            filtersEndDate: String
+            filtersEndDate: String,
+            payType:String,
+            feeType:String
         },
         data() {
             return {
@@ -72,7 +74,9 @@
                     pageNum: this.page,
                     keyWord: this.filtersKeyword,
                     startPayTime:this.filtersStartDate,
-                    endPayTime:this.filtersEndDate
+                    endPayTime:this.filtersEndDate,
+                    payType:this.payType,
+                    feeType:this.feeType
                 };
                 this.listLoading = true;
                 console.log(para);
@@ -96,26 +100,6 @@
             },
             handleEdit: function (index, row) {
 
-            },
-            handleDel: function (index, row) {
-                //
-                this.$confirm('确认要删除吗？', '提示', {}).then(() => {
-
-                    removeHouse(row.id).then((data) => {
-                        if (data.success) {
-                            this.$message({
-                                message: data.msg,
-                                type: 'success'
-                            });
-                            this.getUsers();
-                        } else {
-                            this.$message({
-                                message: data.msg,
-                                type: 'error'
-                            });
-                        }
-                    })
-                })
             },
             formatFeeType: function (row, column, cellValue) {
                 switch (cellValue) {

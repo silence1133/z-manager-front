@@ -3,12 +3,12 @@
     <el-dialog title="修改商铺" :visible.sync="editFormVisible" :close-on-click-modal="false" width="40%">
         <el-form :model="editForm" label-width="110px" :rules="editFormRules" ref="editForm">
             <el-form-item label="商铺描述" prop="address">
-                <el-input v-model="editForm.address" :maxlength="maxlength"></el-input>
+                <el-input v-model="editForm.address" ></el-input>
             </el-form-item>
             <el-form-item label="面积" prop="area">
                 <el-row :gutter="6">
                     <el-col :span="12">
-                        <el-input v-model.number="editForm.area" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="editForm.area" ></el-input>
                     </el-col>
                     <el-col :span="4">㎡</el-col>
                 </el-row>
@@ -16,7 +16,7 @@
             <el-form-item label="参考租金单价" prop="rentFee">
                 <el-row :gutter="6">
                     <el-col :span="12">
-                        <el-input v-model.number="editForm.rentFee" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="editForm.rentFee" ></el-input>
                     </el-col>
                     <el-col :span="4">元/平/月</el-col>
                 </el-row>
@@ -24,7 +24,7 @@
             <el-form-item label="参考物业费" prop="propertyFee">
                 <el-row :gutter="6">
                     <el-col :span="12">
-                        <el-input v-model.number="editForm.propertyFee" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="editForm.propertyFee" ></el-input>
                     </el-col>
                     <el-col :span="4">元/平/月</el-col>
                 </el-row>
@@ -36,7 +36,7 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="备注" prop="remarks">
-                <el-input v-model="editForm.remarks" :maxlength="maxlength" type="textarea"></el-input>
+                <el-input v-model="editForm.remarks"  type="textarea"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer">

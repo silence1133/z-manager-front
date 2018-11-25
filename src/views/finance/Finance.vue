@@ -4,7 +4,7 @@
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
             <el-form :inline="true">
                 <el-form-item>
-                    <el-input v-model="filtersKeyWord" placeholder="关键字"></el-input>
+                    <el-input v-model="filtersKeyWord" placeholder="商户编号/公司/法人/合同编号" style="width: 240px;"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getList" icon="el-icon-search" size="medium">查询</el-button>

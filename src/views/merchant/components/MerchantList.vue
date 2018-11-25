@@ -110,10 +110,7 @@
             },
             handleDel: function (index, row) {
                 this.$confirm('确认要删除商户资料吗？', '提示', {}).then(() => {
-                    let params = {
-                        merchantId:row.id
-                    };
-                    removeMerchant(params).then((res)=>{
+                    removeMerchant(row.id).then((res)=>{
                         console.log(res);
                         this.addLoading = false;
                         let {msg, success} = res;

@@ -63,6 +63,8 @@
                     keyWord: this.$route.query.keyWord,
                     startPayTime: this.$route.query.startPayTime,
                     endPayTime: this.$route.query.endPayTime,
+                    payType:this.$route.query.payType,
+                    feeType:this.$route.query.feeType
                 };
                 console.log(para);
                 getReportList(para).then((res) => {

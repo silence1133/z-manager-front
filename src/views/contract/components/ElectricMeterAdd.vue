@@ -41,6 +41,15 @@
                     electricMeterCode: [
                         {required: true, message: '请输入电表的编号', trigger: 'blur'},
                     ],
+                    voltage: [
+                        {required: true, message: '请输入电压', trigger: 'blur'},
+                    ],
+                    electricCurrent: [
+                        {required: true, message: '请输入电流', trigger: 'blur'},
+                    ],
+                    magnification: [
+                        {required: true, message: '请输入倍率', trigger: 'blur'},
+                    ],
                     initMark: [
                         {required: true, message: '初始刻度不能为空'},
                         {type: 'number', message: '初始刻度必须为数字值'}

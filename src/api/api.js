@@ -22,7 +22,7 @@ export const removeUser = params => { return axios.post(`${base}/user/delete/`+p
  */
 export const getHouseListPage = params => { return axios.get(`${base}/house/list`, { params: params }); };
 
-export const removeHouse = params => { return axios.post(`${base}/house/delete/house`,params).then(res => res.data); };
+export const removeHouse = params => { return axios.post(`${base}/house/delete/`+params).then(res => res.data); };
 
 export const addHouse = params => { return axios.post(`${base}/house/add`,params).then(res => res.data); };
 
@@ -42,7 +42,7 @@ export const addMerchant = params => { return axios.post(`${base}/merchant/add`,
 
 // export const removeMerchant = params => { return axios.post(`${base}/merchant/delete/`+params).then(res => res.data); };
 
-export const removeMerchant = params => { return axios.post(`${base}/merchant/delete/merchant`,params).then(res => res.data); };
+export const removeMerchant = params => { return axios.post(`${base}/merchant/delete/`+params).then(res => res.data); };
 
 export const editMerchant = params => { return axios.post(`${base}/merchant/update/merchant`,params).then(res => res.data); };
 

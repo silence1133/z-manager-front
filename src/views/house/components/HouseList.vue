@@ -118,10 +118,7 @@
             handleDel: function (index, row) {
                 //
                 this.$confirm('确认要删除吗？', '提示', {}).then(() => {
-                    let para = {
-                        houseId: row.id
-                    };
-                    removeHouse(para).then((data) => {
+                    removeHouse(row.id).then((data) => {
                         if (data.success) {
                             this.$message({
                                 message: data.msg,

@@ -23,9 +23,9 @@
                 </tr>
                 <tr>
                     <td class="thTd">电费单价</td>
-                    <td>{{ printData.contract.electricFee }}元/度</td>
+                    <td>{{ printData.contract.electricFee/100 }}元/度</td>
                     <td class="thTd">水费单价</td>
-                    <td>{{ printData.contract.waterFee }}元/吨</td>
+                    <td>{{ printData.contract.waterFee/100 }}元/吨</td>
                 </tr>
                 <tr>
                     <td class="thTd">租用年限</td>
@@ -42,9 +42,9 @@
                     <td class="thTd">商铺面积</td>
                     <td>{{ item.area }}m²</td>
                     <td class="thTd">租金</td>
-                    <td>{{ item.rentFee }}(元/m²/月)</td>
+                    <td>{{ item.rentFee/100 }}(元/m²/月)</td>
                     <td class="thTd">物业费</td>
-                    <td>{{ item.propertyFee }}(元/m²/月)</td>
+                    <td>{{ item.propertyFee/100 }}(元/m²/月)</td>
                 </tr>
             </table>
             <h2>电表</h2>

@@ -3,15 +3,15 @@
     <el-dialog title="新增商铺" :visible.sync="addFormVisible" :close-on-click-modal="false" width="40%">
         <el-form :model="addForm" label-width="110px" :rules="addFormRules" ref="addForm">
             <el-form-item label="商铺编号" prop="houseCode">
-                <el-input v-model="addForm.houseCode" :maxlength="maxlength"></el-input>
+                <el-input v-model="addForm.houseCode" ></el-input>
             </el-form-item>
             <el-form-item label="商铺描述" prop="address">
-                <el-input v-model="addForm.address" :maxlength="maxlength"></el-input>
+                <el-input v-model="addForm.address" ></el-input>
             </el-form-item>
             <el-form-item label="面积" prop="area">
                 <el-row :gutter="6">
                     <el-col :span="12">
-                        <el-input v-model.number="addForm.area" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="addForm.area" ></el-input>
                     </el-col>
                     <el-col :span="4">㎡</el-col>
                 </el-row>
@@ -19,7 +19,7 @@
             <el-form-item label="参考租金单价" prop="rentFee">
                 <el-row :gutter="6">
                     <el-col :span="12">
-                        <el-input v-model.number="addForm.rentFee" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="addForm.rentFee" ></el-input>
                     </el-col>
                     <el-col :span="4">元/平/月</el-col>
                 </el-row>
@@ -27,7 +27,7 @@
             <el-form-item label="参考物业费" prop="propertyFee">
                 <el-row :gutter="6">
                     <el-col :span="12">
-                        <el-input v-model.number="addForm.propertyFee" :maxlength="maxlength"></el-input>
+                        <el-input v-model.number="addForm.propertyFee" ></el-input>
                     </el-col>
                     <el-col :span="4">元/平/月</el-col>
                 </el-row>
@@ -39,7 +39,7 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="备注" prop="remarks">
-                <el-input v-model="addForm.remarks" :maxlength="maxlength" type="textarea"></el-input>
+                <el-input v-model="addForm.remarks"  type="textarea"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer">
@@ -87,8 +87,7 @@
                     propertyFee: null,
                     remarks: '',
                     status: 1
-                },
-                maxlength: 10
+                }
             }
         },
         methods: {
