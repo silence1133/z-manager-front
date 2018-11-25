@@ -76,6 +76,8 @@ export const getReportList = params => { return axios.get(`${base}/charge/log/al
 
 export const getWaterMeterListPage = params => { return axios.get(`${base}/waterMeter/manage/meter/list`, { params: params }); };
 export const getWaterMeterRecordList = params => { return axios.get(`${base}/waterMeter/manage/record/list`, { params: params }); };
+export const addWaterRecord = params => { return axios.post(`${base}/waterMeter/record/add`, params).then(res => res.data); };
+export const addElectricRecord = params => { return axios.post(`${base}/electricMeter/record/add`, params).then(res => res.data); };
 
 
 export const getElectricMeterListPage = params => { return axios.get(`${base}/electricMeter/manage/meter/list`, { params: params }); };

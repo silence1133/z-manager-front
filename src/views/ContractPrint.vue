@@ -47,7 +47,8 @@
                     <td>{{ item.propertyFee/100 }}(元/m²/月)</td>
                 </tr>
             </table>
-            <h2>电表</h2>
+
+            <h2 v-if="printData.electricMeterList && printData.electricMeterList.length>0">电表</h2>
             <table>
                 <tr v-for="item in printData.electricMeterList">
                     <td class="thTd">电表编号</td>
@@ -56,7 +57,7 @@
                     <td>{{ item.totalUseElectric }}度</td>
                 </tr>
             </table>
-            <h2>水表</h2>
+            <h2 v-if="printData.waterMeterList && printData.waterMeterList.length>0">水表</h2>
             <table>
                 <tr v-for="item in printData.waterMeterList">
                     <td class="thTd">水表编号</td>
@@ -117,7 +118,7 @@
 
     tr {
         height: 40px;
-        font-size: 20px;
+        font-size: 15px;
     }
 
 

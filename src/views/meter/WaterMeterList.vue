@@ -39,6 +39,11 @@
             </el-table-column>
             <el-table-column prop="status" label="状态" :formatter="showStatusText">
             </el-table-column>
+            <el-table-column label="操作" fixed="right" width="160">
+                <template slot-scope="scope">
+                    <el-button type="warning" size="small" icon="el-icon-edit" round @click="handleEdit(scope.$index, scope.row)" title="录入水表刻度">录入用水刻度</el-button>
+                </template>
+            </el-table-column>
         </el-table>
 
         <!--工具条-->
@@ -47,11 +52,28 @@
                            :page-count="total" style="float:right;">
             </el-pagination>
         </el-col>
+
+        <el-dialog title="录入用水情况" :visible.sync="addFormVisible" :close-on-click-modal="false" width="30%">
+            <el-form :model="addForm" :rules="addFormRules" ref="addForm">
+                <el-form-item label="当前用水刻度" prop="currentMark" label-width="30%">
+                    <el-input v-model.number="addForm.currentMark"></el-input>
+                </el-form-item>
+                <el-form-item label="抄表时间" prop="markDate" label-width="30%">
+                    <el-date-picker type="date" placeholder="选择日期" v-model="addForm.markDate"
+                                    value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+                </el-form-item>
+            </el-form>
+            <div slot="footer">
+                <el-button @click.native="addFormVisible = false">取消</el-button>
+                <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+            </div>
+        </el-dialog>
+
     </div>
 </template>
 
 <script>
-    import {getWaterMeterListPage, getWaterMeterRecordList} from "@/api/api";
+    import {addWaterRecord, getWaterMeterListPage, getWaterMeterRecordList} from "@/api/api";
 
     export default {
         name: "WaterMeterList",
@@ -65,6 +87,22 @@
                 page: 1,
                 listLoading: false,
                 innerListLoading:false,
+                addFormVisible:false,
+                addLoading:false,
+                addForm:{
+                    waterMeterId:null,
+                    currentMark:null,
+                    markDate:null
+                },
+                addFormRules:{
+                    currentMark: [
+                        {required: true, message: '请输入当前用水刻度', trigger: 'blur'},
+                        {type: 'number', message: '必须为数字值'}
+                    ],
+                    markDate: [
+                        {required: true, message: '请选择抄表日期', trigger: 'blur'}
+                    ]
+                },
                 sels: [],//列表选中列
             }
         },
@@ -121,27 +159,39 @@
                 this.sels = sels;
             },
             handleEdit: function (index, row) {
-
+                this.addFormVisible = true;
+                this.addForm = {};
+                this.addForm.waterMeterId = row.id
+                console.log(this.addForm);
             },
-            handleDel: function (index, row) {
-                //
-                this.$confirm('确认要删除吗？', '提示', {}).then(() => {
-
-                    removeHouse(row.id).then((data) => {
-                        if (data.success) {
-                            this.$message({
-                                message: data.msg,
-                                type: 'success'
+            addSubmit: function () {
+                this.$refs.addForm.validate((valid) => {
+                    if (valid) {
+                        this.$confirm('确认提交吗？', '提示', {}).then(() => {
+                            this.addLoading = true;
+                            let addParams = Object.assign({}, this.addForm);
+                            console.log(addParams);
+                            addWaterRecord(addParams).then((res) => {
+                                console.log(res);
+                                this.addLoading = false;
+                                let {msg, success} = res;
+                                if (success) {
+                                    this.$message({
+                                        message: msg,
+                                        type: 'success'
+                                    });
+                                    this.addFormVisible = false;
+                                    this.getList();
+                                } else {
+                                    this.$message({
+                                        message: msg,
+                                        type: 'error'
+                                    });
+                                }
                             });
-                            this.getUsers();
-                        } else {
-                            this.$message({
-                                message: data.msg,
-                                type: 'error'
-                            });
-                        }
-                    })
-                })
+                        });
+                    }
+                });
             },
             batchRemove: function () {
 

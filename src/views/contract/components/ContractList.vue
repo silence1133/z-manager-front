@@ -214,7 +214,7 @@
                     case 0:
                         return "无效";
                     case 1:
-                        return "签约中";
+                        return "履约中";
                     case 2:
                         return "合同终止";
                 }
