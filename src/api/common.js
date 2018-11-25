@@ -29,36 +29,45 @@ export const digitUppercase = function (n) {
         .replace(/^整$/, '零元整');
 };
 
-export const payWays = [{
-    value: '0',
-    label: '现金'
-}, {
-    value: '1',
-    label: '微信'
-}, {
-    value: '2',
-    label: '支付宝'
-}, {
-    value: '3',
-    label: '银行转账'
-}, {
-    value: '4',
-    label: '刷卡'
-}];
+export const payWays = [
+    {
+        value: null,
+        label: '选择付款方式'
+    },
+    {
+        value: '0',
+        label: '现金'
+    }, {
+        value: '1',
+        label: '微信'
+    }, {
+        value: '2',
+        label: '支付宝'
+    }, {
+        value: '3',
+        label: '银行转账'
+    }, {
+        value: '4',
+        label: '刷卡'
+    }];
 
-export const feeTypes = [{
-    value: '0',
-    label: '租金'
-}, {
-    value: '1',
-    label: '物业'
-}, {
-    value: '2',
-    label: '水费'
-}, {
-    value: '3',
-    label: '电费'
-}];
+export const feeTypes = [
+    {
+        value: null,
+        label: '选择费用类型'
+    }, {
+        value: '0',
+        label: '租金'
+    }, {
+        value: '1',
+        label: '物业'
+    }, {
+        value: '2',
+        label: '水费'
+    }, {
+        value: '3',
+        label: '电费'
+    }];
 
 
 //格式化日期
