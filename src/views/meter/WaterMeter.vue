@@ -49,8 +49,8 @@
                 this.loading = false;
                 if (!response.success) {
                     this.$message({
-                        message: response.msg,
-                        type: 'success'
+                        message: response.msg+","+JSON.stringify(response.data),
+                        type: 'error'
                     });
                 } else {
                     this.$message({
