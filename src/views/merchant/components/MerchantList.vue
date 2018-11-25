@@ -39,9 +39,9 @@
             </el-table-column>
             <el-table-column prop="modifyEmp" label="修改人">
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="70">
+            <el-table-column label="操作" fixed="right" width="110">
                 <template slot-scope="scope">
-                    <!--<el-button type="warning" size="small" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>-->
+                    <el-button type="warning" size="small" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
                     <el-button type="danger" size="small"  icon="el-icon-delete" circle @click="handleDel(scope.$index, scope.row)" title="作废商户资料"></el-button>
                 </template>
             </el-table-column>
@@ -53,15 +53,19 @@
                            :page-count="total" style="float:right;">
             </el-pagination>
         </el-col>
+
+        <merchant-edit ref="merchantEditRef" @getList="getList"></merchant-edit>
     </div>
 </template>
 
 <script>
 
     import {getMerchantListPage, removeMerchant} from "@/api/api";
+    import MerchantEdit from "@/views/merchant/components/MerchantEdit";
 
     export default {
         name: "MerchantList",
+        components: {MerchantEdit},
         props: {
             filtersKeyword: String
         },
@@ -102,20 +106,12 @@
                 this.sels = sels;
             },
             handleEdit: function (index, row) {
-
+                this.$refs.merchantEditRef.handleEdit(row);
             },
             handleDel: function (index, row) {
-                if(row.status == 0){
-                    this.$message({
-                        message: "资料已经作废，无需再操作！",
-                        type: 'error'
-                    });
-                    return;
-                }
-                this.$confirm('确认要作废商户资料吗？', '提示', {}).then(() => {
+                this.$confirm('确认要删除商户资料吗？', '提示', {}).then(() => {
                     let params = {
-                        id:row.id,
-                        status:0
+                        merchantId:row.id
                     };
                     removeMerchant(params).then((res)=>{
                         console.log(res);

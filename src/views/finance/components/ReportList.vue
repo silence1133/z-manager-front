@@ -5,27 +5,35 @@
                   style="width: 100%;">
             <el-table-column type="selection" width="40">
             </el-table-column>
-            <el-table-column type="index">
+            <el-table-column prop="contractCode" label="合同编号" width="100">
             </el-table-column>
-            <el-table-column prop="electricMeterCode" label="合同编号" width="100">
+            <el-table-column prop="coporateBody" label="法人" width="80">
             </el-table-column>
-            <el-table-column prop="contractCode" label="法人" width="120">
+            <el-table-column prop="company" label="公司名称" width="120">
             </el-table-column>
-            <el-table-column prop="contractCode" label="公司名称" width="120">
+            <el-table-column prop="receiptCode" label="收据编号" width="100">
             </el-table-column>
-            <el-table-column prop="initMark" label="缴费人" width="120">
+            <el-table-column prop="feeType" label="收费类型" width="120" :formatter="formatFeeType">
             </el-table-column>
-            <el-table-column prop="initMark" label="收据号" width="120">
+            <el-table-column prop="paidFee" label="收款金额（元）" width="120" :formatter="formatFen2Yuan">
             </el-table-column>
-            <el-table-column prop="status" label="缴费金额">
+            <el-table-column prop="paidMan" label="缴款人">
             </el-table-column>
-            <el-table-column prop="status" label="缴费类型" :formatter="showStatusText">
+            <el-table-column prop="paidMethod" label="缴费方式" :formatter="formatPayWay">
             </el-table-column>
-            <el-table-column prop="status" label="缴费时间" :formatter="showStatusText">
+            <el-table-column prop="paidTime" label="缴费时间" >
             </el-table-column>
-            <el-table-column prop="status" label="收费人" :formatter="showStatusText">
+            <el-table-column prop="chargeMan" label="收费人" >
             </el-table-column>
-            <el-table-column prop="status" label="缴费事由" :formatter="showStatusText">
+            <el-table-column label="缴费事由">
+                <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top">
+                        <p>备注: {{ scope.row.remarks }}</p>
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium">查看</el-tag>
+                        </div>
+                    </el-popover>
+                </template>
             </el-table-column>
         </el-table>
 
@@ -39,12 +47,14 @@
 </template>
 
 <script>
-    import {getElectricMeterListPage, getElectricMeterRecordList} from "@/api/api";
+    import { getReportListPage} from "@/api/api";
 
     export default {
         name: "ReportList",
         props: {
-            filtersKeyword: String
+            filtersKeyword: String,
+            filtersStartDate: String,
+            filtersEndDate: String
         },
         data() {
             return {
@@ -52,7 +62,6 @@
                 total: 0,
                 page: 1,
                 listLoading: false,
-                innerListLoading:false,
                 sels: [],//列表选中列
             }
         },
@@ -62,6 +71,8 @@
                 let para = {
                     pageNum: this.page,
                     keyWord: this.filtersKeyword,
+                    startPayTime:this.filtersStartDate,
+                    endPayTime:this.filtersEndDate
                 };
                 this.listLoading = true;
                 console.log(para);
@@ -72,31 +83,6 @@
                         this.dataList = res.data.data;
                         console.log(res.data);
                         this.listLoading = false;
-                    } else {
-                        this.$message({
-                            message: msg,
-                            type: 'error'
-                        });
-                    }
-                });
-            },
-            setUseDetail(id){
-                let para = {
-                    electricMeterId: id
-                };
-                this.innerListLoading = true;
-                console.log(para);
-                getElectricMeterRecordList(para).then((res) => {
-                    let {msg, success} = res.data;
-                    if (success) {
-                        this.total = res.data.totalPages;
-                        this.dataList.forEach(x=>{
-                            if(x.id == id){
-                                x.useElectricList = res.data.data;
-                            }
-                        })
-                        console.log(this.dataList);
-                        this.innerListLoading = false;
                     } else {
                         this.$message({
                             message: msg,
@@ -131,19 +117,34 @@
                     })
                 })
             },
-            batchRemove: function () {
-
+            formatFeeType: function (row, column, cellValue) {
+                switch (cellValue) {
+                    case 0:
+                        return "租金";
+                    case 1:
+                        return "物业";
+                    case 2:
+                        return "水费";
+                    case 3:
+                        return "电费";
+                }
             },
             handleCurrentChange: function (val) {
                 this.page = val;
                 this.getList();
             },
-            showStatusText: function (row) {
-                switch (row.status) {
+            formatPayWay: function (row, column, cellValue) {
+                switch (cellValue) {
                     case 0:
-                        return "停止使用";
+                        return "现金";
                     case 1:
-                        return "使用中";
+                        return "微信";
+                    case 2:
+                        return "支付宝";
+                    case 3:
+                        return "银行转账";
+                    case 4:
+                        return "刷卡";
                 }
             },
             formatFen2Yuan: function (row, column, cellValue) {
@@ -151,7 +152,7 @@
             },
         },
         mounted() {
-            // this.getList();
+            this.getList();
         }
     }
 </script>

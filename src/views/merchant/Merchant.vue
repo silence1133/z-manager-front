@@ -6,7 +6,7 @@
                 <el-form-item>
                     <el-row :gutter="6">
                         <el-col :span="24">
-                            <el-input v-model="filtersKeyword" placeholder="关键字"></el-input>
+                            <el-input v-model="filtersKeyword" placeholder="商户编号/公司/法人/营业执照" style="width: 220px;"></el-input>
                         </el-col>
                     </el-row>
                 </el-form-item>
@@ -53,7 +53,7 @@
                     return;
                 }
                 let id = this.$refs.merchantListRef.sels[0].id;
-                let merchantCode = this.$refs.merchantListRef.sels[0].merchantCode;
+                let merchantCode = encodeURIComponent(this.$refs.merchantListRef.sels[0].merchantCode);
                 this.$router.push(`/contractAdd/${id}/${merchantCode}`);
             }
         }

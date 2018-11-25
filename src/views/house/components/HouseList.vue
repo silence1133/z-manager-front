@@ -9,7 +9,7 @@
             </el-table-column>
             <el-table-column prop="houseCode" label="商铺编号" width="100">
             </el-table-column>
-            <el-table-column prop="address" label="地址" width="120">
+            <el-table-column prop="address" label="商铺描述" width="120">
             </el-table-column>
             <el-table-column prop="area" label="面积（㎡）" width="120">
             </el-table-column>
@@ -35,12 +35,14 @@
             </el-table-column>
             <el-table-column prop="modifyEmp" label="修改人">
             </el-table-column>
-            <el-table-column prop="status" label="状态" :formatter="showStatusText" >
+            <el-table-column prop="status" label="状态" :formatter="showStatusText">
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="70">
+            <el-table-column label="操作" fixed="right" width="110">
                 <template slot-scope="scope">
-                    <el-button type="warning" size="small" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
-                    <!--<el-button type="danger" size="small"  icon="el-icon-delete" circle @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>-->
+                    <el-button type="warning" size="small" icon="el-icon-edit" circle
+                               @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
+                    <el-button type="danger" size="small" icon="el-icon-delete" circle
+                               @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -104,7 +106,7 @@
                 this.sels = sels;
             },
             handleEdit: function (index, row) {
-                if(row.status == 2){
+                if (row.status == 2) {
                     this.$message({
                         message: "已经出租的不允许操作！",
                         type: 'error'
@@ -116,15 +118,17 @@
             handleDel: function (index, row) {
                 //
                 this.$confirm('确认要删除吗？', '提示', {}).then(() => {
-
-                    removeHouse(row.id).then((data)=>{
-                        if(data.success){
+                    let para = {
+                        houseId: row.id
+                    };
+                    removeHouse(para).then((data) => {
+                        if (data.success) {
                             this.$message({
                                 message: data.msg,
                                 type: 'success'
                             });
-                            this.getUsers();
-                        }else{
+                            this.getList();
+                        } else {
                             this.$message({
                                 message: data.msg,
                                 type: 'error'
@@ -140,15 +144,18 @@
                 this.page = val;
                 this.getList();
             },
-            showStatusText:function (row) {
+            showStatusText: function (row) {
                 switch (row.status) {
-                    case 0:return "不可出租";
-                    case 1:return "可出租";
-                    case 2:return "已出租";
+                    case 0:
+                        return "不可出租";
+                    case 1:
+                        return "可出租";
+                    case 2:
+                        return "已出租";
                 }
             },
-            formatFen2Yuan:function (row, column, cellValue) {
-                return cellValue/100;
+            formatFen2Yuan: function (row, column, cellValue) {
+                return cellValue / 100;
             }
         },
         mounted() {

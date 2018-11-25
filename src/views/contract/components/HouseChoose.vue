@@ -82,6 +82,13 @@
                     rentFee: '',
                     propertyFee: ''
                 };
+                if(this.inputHouseCode == '' || this.inputRentFee=='' || this.inputPropertyFee == ''){
+                    this.$message({
+                        message: "商铺信息不能为空",
+                        type: 'error'
+                    });
+                    return;
+                }
                 inputValue.id = this.inputHouseId;
                 inputValue.houseCode = this.inputHouseCode;
                 inputValue.rentFee = this.inputRentFee;

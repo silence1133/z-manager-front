@@ -18,7 +18,7 @@
                     >
                         <el-tooltip placement="bottom" >
                             <div slot="content">1、上传前请严格检查数据是否正确，导入后数据将无法回退！<br/>2、文件大小不能超过2m</div>
-                            <el-button size="medium" type="primary" :loading="loading">导入用电Excel</el-button>
+                            <el-button size="medium" type="warning" icon="el-icon-upload" :loading="loading">导入用电Excel</el-button>
                         </el-tooltip>
                     </el-upload>
                 </el-form-item>

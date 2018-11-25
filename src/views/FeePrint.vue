@@ -43,9 +43,13 @@
             </div>
             <div class="footer">
                 <tr style="font-size: 18px;">
-                    <td style="width: 300px;">单位盖章</td>
+                    <td style="width: 240px;">单位盖章</td>
                     <td></td>
-                    <td>收款人</td>
+                    <td>出纳</td>
+                    <td style="width: 120px;"></td>
+                    <td>商户</td>
+                    <td style="width: 120px;"></td>
+                    <td>经办</td>
                     <td>&nbsp;&nbsp;&nbsp; {{$route.query.chargeMan}}</td>
                 </tr>
             </div>
@@ -94,9 +98,13 @@
             </div>
             <div class="footer">
                 <tr style="font-size: 18px;">
-                    <td style="width: 300px;">单位盖章</td>
+                    <td style="width: 240px;">单位盖章</td>
                     <td></td>
-                    <td>收款人</td>
+                    <td>出纳</td>
+                    <td style="width: 120px;"></td>
+                    <td>商户</td>
+                    <td style="width: 120px;"></td>
+                    <td>经办</td>
                     <td>&nbsp;&nbsp;&nbsp; {{$route.query.chargeMan}}</td>
                 </tr>
             </div>
@@ -145,9 +153,13 @@
             </div>
             <div class="footer">
                 <tr style="font-size: 18px;">
-                    <td style="width: 300px;">单位盖章</td>
+                    <td style="width: 240px;">单位盖章</td>
                     <td></td>
-                    <td>收款人</td>
+                    <td>出纳</td>
+                    <td style="width: 120px;"></td>
+                    <td>商户</td>
+                    <td style="width: 120px;"></td>
+                    <td>经办</td>
                     <td>&nbsp;&nbsp;&nbsp; {{$route.query.chargeMan}}</td>
                 </tr>
             </div>
@@ -193,7 +205,7 @@
         text-align: center;
         margin-left: 20px;
         padding-left: 20px;
-        padding-top: 20px;
+        padding-top: 5px;
     }
 
     .footer {

@@ -9,6 +9,8 @@
             </el-table-column>
             <el-table-column prop="contract.contractCode" label="合同编号" width="100">
             </el-table-column>
+            <el-table-column prop="contract.company" label="公司" width="100">
+            </el-table-column>
             <el-table-column prop="contract.business" label="经营业务" width="120">
             </el-table-column>
             <el-table-column prop="contract.cashBledge" label="履约保证金（元）" :formatter="formatFen2Yuan">
@@ -29,7 +31,7 @@
             </el-table-column>
             <el-table-column prop="contract.electricFee" label="电费单价（元/度）" width="120" :formatter="formatFen2Yuan">
             </el-table-column>
-            <el-table-column prop="contract.waterFee" label="水费单价（元/度）" :formatter="formatFen2Yuan">
+            <el-table-column prop="contract.waterFee" label="水费单价（元/吨）" :formatter="formatFen2Yuan">
             </el-table-column>
             <el-table-column prop="contract.contractTime" label="合同签订时间" width="120" :formatter="formatDate">
             </el-table-column>
@@ -56,7 +58,7 @@
                 <template slot-scope="scope">
                     <el-popover trigger="click" placement="left">
                         <el-table :data="scope.row.electricMeterList">
-                            <el-table-column width="150" property="electricMeterCode" label="商铺编号"></el-table-column>
+                            <el-table-column width="150" property="electricMeterCode" label="电表编号"></el-table-column>
                             <el-table-column width="150" property="initMark" label="初使刻度"></el-table-column>
                             <el-table-column width="150" property="totalUseElectric" label="总用电（度）"></el-table-column>
                         </el-table>
@@ -68,7 +70,7 @@
                 <template slot-scope="scope">
                     <el-popover trigger="click" placement="left">
                         <el-table :data="scope.row.waterMeterList">
-                            <el-table-column width="150" property="waterMeterCode" label="商铺编号"></el-table-column>
+                            <el-table-column width="150" property="waterMeterCode" label="水表编号"></el-table-column>
                             <el-table-column width="150" property="initMark" label="初使刻度"></el-table-column>
                             <el-table-column width="150" property="totalWater" label="总用水（吨）"></el-table-column>
                         </el-table>
@@ -76,16 +78,19 @@
                     </el-popover>
                 </template>
             </el-table-column>
+            <el-table-column label="合同处理" width="120">
+                <template slot-scope="scope">
+                    <el-button type="info" size="small" icon="el-icon-message" circle
+                               @click="handleEdit(scope.$index, scope.row)" title="解约"></el-button>
+                    <el-button type="danger" size="small" icon="el-icon-delete" circle
+                               @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>
+                </template>
+            </el-table-column>
             <el-table-column label="操作" fixed="right" width="130">
                 <template slot-scope="scope">
-                    <!--                    <el-button type="warning" size="small" icon="el-icon-edit" circle
-                                                   @click="handleEdit(scope.$index, scope.row)" title="编辑"></el-button>
-                                        <el-button type="danger" size="small" icon="el-icon-delete" circle
-                                                   @click="handleDel(scope.$index, scope.row)" title="删除"></el-button>-->
                     <el-button type="text" size="small" @click="addWaterMeter(scope.$index, scope.row)">添加水表</el-button>
                     <el-button type="text" size="small" @click="addElectricMeter(scope.$index, scope.row)">添加电表
                     </el-button>
-
                 </template>
             </el-table-column>
         </el-table>
@@ -104,7 +109,7 @@
 
 <script>
 
-    import {getContractListPage} from "@/api/api";
+    import {editContractStatus, getContractListPage} from "@/api/api";
     import WaterMeterAdd from "@/views/contract/components/WaterMeterAdd";
     import ElectricMeterAdd from "@/views/contract/components/ElectricMeterAdd";
     import {dateFormat} from "@/api/common";
@@ -152,12 +157,49 @@
                 this.sels = sels;
             },
             handleEdit: function (index, row) {
-
+                this.$confirm('确认要终止合同吗？', '提示', {}).then(() => {
+                    let para = {
+                        id:row.contract.id,
+                        status:2
+                    };
+                    console.log(para);
+                    editContractStatus(para).then((data) => {
+                        if (data.success) {
+                            this.$message({
+                                message: data.msg,
+                                type: 'success'
+                            });
+                            this.getList();
+                        } else {
+                            this.$message({
+                                message: data.msg,
+                                type: 'error'
+                            });
+                        }
+                    })
+                })
             },
             handleDel: function (index, row) {
-
-                this.$confirm('确认要删除吗？', '提示', {}).then(() => {
-
+                this.$confirm('确认要作废合同吗？', '提示', {}).then(() => {
+                    let para = {
+                        id:row.contract.id,
+                        status:0
+                    };
+                    console.log(para);
+                    editContractStatus(para).then((data) => {
+                        if (data.success) {
+                            this.$message({
+                                message: data.msg,
+                                type: 'success'
+                            });
+                            this.getList();
+                        } else {
+                            this.$message({
+                                message: data.msg,
+                                type: 'error'
+                            });
+                        }
+                    })
                 })
             },
             batchRemove: function () {

@@ -22,13 +22,13 @@ export const removeUser = params => { return axios.post(`${base}/user/delete/`+p
  */
 export const getHouseListPage = params => { return axios.get(`${base}/house/list`, { params: params }); };
 
-export const removeHouse = params => { return axios.post(`${base}/house/delete/`+params).then(res => res.data); };
+export const removeHouse = params => { return axios.post(`${base}/house/delete/house`,params).then(res => res.data); };
 
 export const addHouse = params => { return axios.post(`${base}/house/add`,params).then(res => res.data); };
 
 export const loadHouseList = () => { return axios.get(`${base}/house/list/available`).then(res => res.data); };
 
-export const editHouse = params => { return axios.post(`${base}/house/update/status`,params).then(res => res.data); };
+export const editHouse = params => { return axios.post(`${base}/house/update/house`,params).then(res => res.data); };
 
 
 /**
@@ -42,7 +42,10 @@ export const addMerchant = params => { return axios.post(`${base}/merchant/add`,
 
 // export const removeMerchant = params => { return axios.post(`${base}/merchant/delete/`+params).then(res => res.data); };
 
-export const removeMerchant = params => { return axios.post(`${base}/merchant/update/status`,params).then(res => res.data); };
+export const removeMerchant = params => { return axios.post(`${base}/merchant/delete/merchant`,params).then(res => res.data); };
+
+export const editMerchant = params => { return axios.post(`${base}/merchant/update/merchant`,params).then(res => res.data); };
+
 
 /**
  * 合同相关
@@ -57,12 +60,18 @@ export const addWaterMeter = params => { return axios.post(`${base}/waterMeter/a
 
 export const addElectricMeter = params => { return axios.post(`${base}/electricMeter/add`,params).then(res => res.data); };
 
+export const editContractStatus = params => { return axios.post(`${base}/contract/release`,params).then(res => res.data); };
+
 
 
 
 export const getFinanceListPage = params => { return axios.get(`${base}/charge/list`, { params: params }); };
 export const getPaidDetailList = params => { return axios.get(`${base}/charge/log/list`, { params: params }); };
 export const addCharge = params => { return axios.post(`${base}/charge/add`, params).then(res => res.data); };
+export const getReportListPage = params => { return axios.get(`${base}/charge/log/page`, { params: params }); };
+export const getReportList = params => { return axios.get(`${base}/charge/log/all`, { params: params }); };
+
+
 
 
 export const getWaterMeterListPage = params => { return axios.get(`${base}/waterMeter/manage/meter/list`, { params: params }); };
@@ -80,6 +89,8 @@ export const materialOutstock = params => { return axios.post(`${base}/stock/out
 export const getInstockList = params => { return axios.get(`${base}/stock/list/material/in`, { params: params }); };
 export const getOutstockList = params => { return axios.get(`${base}/stock/list/material/out`, { params: params }); };
 export const editMaterial = params => { return axios.post(`${base}/material/update`, params).then(res => res.data); };
+
+
 
 
 

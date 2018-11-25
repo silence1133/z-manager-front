@@ -5,7 +5,7 @@
             <el-form-item label="商铺编号" prop="houseCode">
                 <el-input v-model="addForm.houseCode" :maxlength="maxlength"></el-input>
             </el-form-item>
-            <el-form-item label="商铺地址" prop="address">
+            <el-form-item label="商铺描述" prop="address">
                 <el-input v-model="addForm.address" :maxlength="maxlength"></el-input>
             </el-form-item>
             <el-form-item label="面积" prop="area">

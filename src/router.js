@@ -13,6 +13,8 @@ import ContractAdd from './views/contract/ContractAdd'
 import WaterMeter from './views/meter/WaterMeter'
 import ElectricMeter from './views/meter/ElectricMeter'
 import FeePrint from './views/FeePrint.vue'
+import ContractPrint from './views/ContractPrint.vue'
+import FeeReportPrint from './views/FeeReportPrint.vue'
 
 
 let routes = [
@@ -31,6 +33,18 @@ let routes = [
     {
         path: '/print',
         component: FeePrint,
+        name: '',
+        hidden: true
+    },
+    {
+        path: '/contractPrint',
+        component: ContractPrint,
+        name: '',
+        hidden: true
+    },
+    {
+        path: '/feeReportPrint',
+        component: FeeReportPrint,
         name: '',
         hidden: true
     },
