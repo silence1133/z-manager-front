@@ -27,10 +27,9 @@
                     </tr>
                     <tr>
                         <td>人民币<span style="font-size: 10px;">(大写)</span></td>
-                        <td style="width: 250px;border-bottom:solid 1px black;text-align: left;">
+                        <td style="width: 300px;border-bottom:solid 1px black;text-align: left;" colspan="2">
                             {{$route.query.paidFee}}
                         </td>
-                        <td></td>
                         <td></td>
                     </tr>
                     <tr>
@@ -82,10 +81,9 @@
                     </tr>
                     <tr>
                         <td>人民币<span style="font-size: 10px;">(大写)</span></td>
-                        <td style="width: 250px;border-bottom:solid 1px black;text-align: left;">
+                        <td style="width: 300px;border-bottom:solid 1px black;text-align: left;" colspan="2">
                             {{$route.query.paidFee}}
                         </td>
-                        <td></td>
                         <td></td>
                     </tr>
                     <tr>
@@ -137,10 +135,9 @@
                     </tr>
                     <tr>
                         <td>人民币<span style="font-size: 10px;">(大写)</span></td>
-                        <td style="width: 250px;border-bottom:solid 1px black;text-align: left;">
+                        <td style="width: 300px;border-bottom:solid 1px black;text-align: left;" colspan="2">
                             {{$route.query.paidFee}}
                         </td>
-                        <td></td>
                         <td></td>
                     </tr>
                     <tr>

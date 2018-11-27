@@ -32,7 +32,7 @@
                         <span v-if="item.paidMethod == 1">微信</span>
                         <span v-if="item.paidMethod == 2">支付宝</span>
                         <span v-if="item.paidMethod == 3">银行转账</span>
-                        <span v-if="item.paidMethod == 3">刷卡</span>
+                        <span v-if="item.paidMethod == 4">刷卡</span>
                     </td>
                     <td>{{ item.paidTime }}</td>
                     <td>{{ item.chargeMan }}</td>
