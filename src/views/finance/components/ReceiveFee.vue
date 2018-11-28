@@ -53,7 +53,7 @@
                 <el-input v-model.number="addForm.paidFee" style="width: 130px;"></el-input>&nbsp;元
             </el-form-item>
             <el-form-item label="缴费事由" prop="remarks">
-                <el-input v-model="addForm.remarks" maxlength="20" type="textarea" rows="3"></el-input>
+                <el-input v-model="addForm.remarks" maxlength="50" type="textarea" rows="3"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer">
@@ -110,7 +110,7 @@
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
-                            let addParams = Object.assign({}, this.addForm);
+                            let addParams = JSON.parse(JSON.stringify(this.addForm));
                             addParams.paidFee = addParams.paidFee * 100;
                             console.log(addParams);
                             addCharge(addParams).then((res) => {

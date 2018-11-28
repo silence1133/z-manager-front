@@ -109,10 +109,12 @@
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
-                            let addParams = Object.assign({}, this.addForm);
+
+                            let addParams = JSON.parse(JSON.stringify(this.addForm));
                             //元转化为分提交给后段
                             addParams.rentFee = addParams.rentFee * 100;
                             addParams.propertyFee = addParams.propertyFee * 100;
+
                             addHouse(addParams).then((res) => {
                                 console.log(res);
                                 this.addLoading = false;

@@ -42,7 +42,7 @@
             <el-table-column label="租用商铺信息" width="120">
                 <template slot-scope="scope">
                     <el-popover trigger="click" placement="left">
-                        <el-table :data="scope.row.houseList">
+                        <el-table :data="scope.row.houseList" style="overflow:scroll;height: 400px;">
                             <el-table-column width="150" property="houseCode" label="商铺编号"></el-table-column>
                             <el-table-column width="150" property="area" label="商铺面积"></el-table-column>
                             <el-table-column width="150" property="rentFee" label="租金(元/平/月)"

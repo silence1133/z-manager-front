@@ -195,11 +195,10 @@
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
-                            let addParams = Object.assign({}, this.addForm);
-
-                            this.addForm.contract.cashBledge =  this.addForm.contract.cashBledge*100;
-                            this.addForm.contract.electricFee = this.addForm.contract.electricFee*100;
-                            this.addForm.contract.waterFee = this.addForm.contract.waterFee*100;
+                            let addParams = JSON.parse(JSON.stringify(this.addForm));
+                            addParams.contract.cashBledge =  addParams.contract.cashBledge*100;
+                            addParams.contract.electricFee = addParams.contract.electricFee*100;
+                            addParams.contract.waterFee = addParams.contract.waterFee*100;
 
                             console.log(addParams);
                             addContract(addParams).then((res) => {
