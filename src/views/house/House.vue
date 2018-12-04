@@ -33,6 +33,7 @@
         },
         methods:{
             getList:function () {
+                this.$refs.houseListRef.$data.page = null;
                 this.$refs.houseListRef.getList();
             },
             handleAdd:function () {

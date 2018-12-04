@@ -124,7 +124,7 @@
             return {
                 dataList: [],
                 total: 0,
-                pageNum: 1,
+                page: 1,
                 listLoading: false,
                 sels: [],//列表选中列
             }

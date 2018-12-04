@@ -11,7 +11,7 @@
                 </el-form-item>
             </el-form>
         </el-col>
-        <receivables-list ref="receivablesListRef"></receivables-list>
+        <receivables-list ref="receivablesListRef" :filtersKeyWord="filtersKeyWord"></receivables-list>
     </section>
 </template>
 
@@ -28,6 +28,7 @@
         },
         methods: {
             getList: function () {
+                this.$refs.receivablesListRef.$data.page = null;
                 this.$refs.receivablesListRef.getList();
             }
         }

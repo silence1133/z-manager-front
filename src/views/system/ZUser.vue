@@ -39,6 +39,7 @@
         },
         methods:{
             getUsers:function () {
+                this.$refs.userListRef.$data.page = null;
                 this.$refs.userListRef.getUsers();
             },
             handleAdd:function () {

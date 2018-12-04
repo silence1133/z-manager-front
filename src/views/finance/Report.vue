@@ -68,6 +68,7 @@
                     });
                     return;
                 }
+                this.$refs.reportListRef.$data.page = null
                 this.$refs.reportListRef.getList();
             },
             getListPrint: function () {

@@ -34,6 +34,7 @@
         },
         methods:{
             getList:function () {
+                this.$refs.materialListRef.$data.page = null;
                 this.$refs.materialListRef.getList();
             },
             handleAdd:function () {

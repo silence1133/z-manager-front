@@ -39,6 +39,7 @@
         },
         methods:{
             getList:function () {
+                this.$refs.merchantListRef.$data.page = null;
                 this.$refs.merchantListRef.getList();
             },
             handleAdd:function () {

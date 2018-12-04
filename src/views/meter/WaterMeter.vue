@@ -43,6 +43,7 @@
         },
         methods: {
             getList: function () {
+                this.$refs.meterList.$data.page = null;
                 this.$refs.meterList.getList();
             },
             uploadSuccess: function (response, file, fileList) {

@@ -29,6 +29,7 @@
         },
         methods:{
             getList:function () {
+                this.$refs.contractListRef.$data.page = null;
                 this.$refs.contractListRef.getList();
             },
             printContract:function () {
