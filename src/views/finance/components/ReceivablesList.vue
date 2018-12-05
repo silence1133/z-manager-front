@@ -108,9 +108,6 @@
                 </el-table-column>
             </el-table-column>
             <el-table-column label="水费" header-align="center">
-                <el-table-column prop="chargeMainInfo.totalWaterFee" label="应缴（元）" width="100"
-                                 :formatter="formatFen2Yuan">
-                </el-table-column>
                 <el-table-column prop="chargeMainInfo.paidWaterFee" label="已缴（元）" width="100">
                     <template slot-scope="scope">
                         <el-popover trigger="click" placement="left">
@@ -134,8 +131,11 @@
                         </el-popover>
                     </template>
                 </el-table-column>
-                <el-table-column prop="chargeMainInfo.restWaterFee" label="剩余应缴（元）" width="100"
+                <el-table-column prop="chargeMainInfo.totalWaterFee" label="已用（元）" width="100"
                                  :formatter="formatFen2Yuan">
+                </el-table-column>
+                <el-table-column prop="chargeMainInfo.totalWaterFee" label="剩余（元）" width="100"
+                                 :formatter="formatFen2YuanForWaterFeeLeft">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="电费" header-align="center">
@@ -273,6 +273,9 @@
             },
             formatFen2YuanText: function (cellValue) {
                 return cellValue / 100;
+            },
+            formatFen2YuanForWaterFeeLeft:function(row, column, cellValue){
+                return (row.chargeMainInfo.paidWaterFee-row.chargeMainInfo.totalWaterFee)/ 100;
             },
             showStatusText: function (row) {
                 switch (row.status) {
