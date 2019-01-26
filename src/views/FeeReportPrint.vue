@@ -37,6 +37,11 @@
                     <td>{{ item.paidTime }}</td>
                     <td>{{ item.chargeMan }}</td>
                 </tr>
+                <tr>
+                    <td colspan="8"></td>
+                    <td>合计：</td>
+                    <td>{{ totalFee/100 }}（元）</td>
+                </tr>
             </table>
         </div>
     </div>
@@ -50,7 +55,8 @@
         name: "FeeReportPrint",
         data() {
             return {
-                printData: []
+                printData: [],
+                totalFee: 0
             }
         },
         methods: {
@@ -63,14 +69,17 @@
                     keyWord: this.$route.query.keyWord,
                     startPayTime: this.$route.query.startPayTime,
                     endPayTime: this.$route.query.endPayTime,
-                    payType:this.$route.query.payType,
-                    feeType:this.$route.query.feeType
+                    payType: this.$route.query.payType,
+                    feeType: this.$route.query.feeType
                 };
                 console.log(para);
                 getReportList(para).then((res) => {
                     let {msg, success} = res.data;
                     if (success) {
                         this.printData = res.data.data;
+                        this.printData.forEach(x => {
+                            this.totalFee = x.paidFee + this.totalFee;
+                        })
                         console.log(this.dataList);
                     } else {
                         this.$message({
@@ -84,7 +93,7 @@
         mounted() {
             this.getList();
         },
-        updated(){
+        updated() {
             this.print();
         }
     }
@@ -111,7 +120,7 @@
     }
 
     th {
-        background-color:#999999
+        background-color: #999999
     }
 
     tr {
