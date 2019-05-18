@@ -3,7 +3,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api':{
-                target: 'http://tpy.silence.work:8080/',//设置你调用的接口域名和端口号
+                target: 'x',//设置你调用的接口域名和端口号
                 // target: 'http://localhost:8080/',
                 changeOrigin: true,   //跨域
                 pathRewrite: {
